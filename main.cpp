@@ -1,7 +1,7 @@
 #include <iostream>
+#include "app.h"
 using namespace std;
 
 int main(){
-    cout << "Hello wworld";
-    cout << "Halo Gathan";
+    menu();
 }
