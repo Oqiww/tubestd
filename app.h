@@ -4,6 +4,8 @@
 using namespace std;
 
 void menu();
+void menuAdmin(); 
+void signUpAdmin();
 
 
 #endif
