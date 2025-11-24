@@ -76,4 +76,5 @@ void signUpAdmin(){
     int umur;
     cout << "ini ros";
     cout << "Ini syauqi";
+    cout << "Ini Nada" ;
 };
