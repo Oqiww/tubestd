@@ -73,5 +73,6 @@ void menuAdmin(){
 
 void signUpAdmin(){
     string nama;
-    
+    int umur;
+    cout << "ini ros";
 };
