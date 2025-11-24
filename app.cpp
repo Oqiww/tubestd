@@ -75,4 +75,5 @@ void signUpAdmin(){
     string nama;
     int umur;
     cout << "ini ros";
+    cout << "Ini syauqi";
 };
