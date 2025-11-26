@@ -1,10 +1,13 @@
 #include "app.h"
+#include "backend.h"
 #include <vector>
 vector<Admin> dataAdmin;
 vector<User> dataUser;
 
+ListLagu masterLagu;
 
 void menu(){
+    createListLagu(masterLagu);
     bool ulang = true;
     while (ulang){
         cout << "+--------------------+" << endl;
@@ -69,7 +72,7 @@ void menuAdmin(){
         case 2: {
             int indexAdmin = loginAdmin();
             if (indexAdmin != -1 && indexAdmin != -2){
-                //fungsi
+                homeAdmin();
             }
             break;
         }
@@ -147,6 +150,53 @@ int loginAdmin(){
     cout << "Username / password salah!" << endl;
     return -1;
 };  
+
+void homeAdmin(){
+    while(true){
+        cout << "+--------------------+" << endl;
+        cout << "|                    |" << endl;
+        cout << "|       Spitipi      |" << endl;
+        cout << "|                    |" << endl;
+        cout << "+--------------------+" << endl;
+        cout << endl;
+
+        cout << "1. Tambah lagu" << endl;
+        cout << "2. Lihat semua lagu" << endl;
+        cout << "3. Kembali" << endl;
+
+        int pilihan;
+        cout << "Masukkan pilihan anda: ";
+        cin >> pilihan;
+
+        switch (pilihan)
+        {
+        case 1: {
+            Lagu L;
+            cout << "ID Lagu: ";
+            cin >> L.id;
+            cout << "Judul: ";
+            cin >> L.judul;
+            cout << "Penyanyi: ";
+            cin >> L.penyanyi;
+            cout << "Durasi (ex: 03:20): ";
+            cin >> L.durasi;
+            cout << "Genre: ";
+            cin >> L.genre;
+
+            insertLastLagu(masterLagu, createElmLagu(L));
+            cout << "Lagu berhasil ditambahkan!\n";
+            break;
+        }
+        case 2:
+            showAllLagu(masterLagu);
+            break;
+        case 3:
+            return;
+        default:
+            cout << "Pilihan tidak valid!\n";
+        }
+    }
+};
 
 void menuUser(){
     while (true){

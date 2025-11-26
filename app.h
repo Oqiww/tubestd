@@ -27,6 +27,7 @@ void menu();
 void menuAdmin(); 
 void signUpAdmin();
 int loginAdmin();
+void homeAdmin();
 
 // Menu untuk user
 void menuUser();
