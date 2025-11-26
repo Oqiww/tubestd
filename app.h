@@ -15,11 +15,23 @@ struct Admin {
     string password;
 };
 
+// Untuk menyimpan data admin
 extern vector <Admin> dataAdmin;
 
+// Untuk menyimpan data user
+extern vector<User> dataUser;
+
 void menu();
+
+// Menu untuk admin
 void menuAdmin(); 
 void signUpAdmin();
+int loginAdmin();
+
+// Menu untuk user
+void menuUser();
+void signUpUser();
+int loginUser();
 
 
 #endif
