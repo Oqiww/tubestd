@@ -44,3 +44,47 @@ void showAllLagu(ListLagu L){
         P = P->next;
     }
 };
+addressLagu searchLagu(ListLagu L, string x){
+    addressLagu P;
+    P = L.first;
+    while (P != nullptr){
+        if (P->info.judul == x){
+            return P;
+        }
+        P = P->next;
+    }
+    return nullptr;
+}
+
+
+void deleteLagu(ListLagu &L, addressLagu P, string x){
+    addressLagu Prec, q;
+    q = searchLagu(L,x);
+    if (q){
+        if (q == L.first && q == L.last){
+            L.first = nullptr;
+            L.last = nullptr;
+        } else if (q == L.first){
+            q = L.first;
+            L.first = q->next;
+            q->next = nullptr;
+            L.first->prev = nullptr;
+        }else if (q == L.last){
+            q = L.last;
+            L.last = L.last->prev;
+            q->prev = nullptr;
+            L.last->next = nullptr;
+        }else{
+            Prec = q->prev;
+            q = Prec->next;
+            Prec->next = q->next;
+            q->next->prev = Prec;
+            q->next = nullptr;
+            q->prev = nullptr;
+
+        }
+    }else{
+        cout << "Lagu yang ingin anda hapus tidak ada di Spitipi" << endl;
+    }
+
+}

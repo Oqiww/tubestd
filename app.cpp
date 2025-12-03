@@ -25,7 +25,7 @@ void menu(){
 
         // Pilih menu
         int pilihan;
-        cout << "Masukkan pilihan anda: ";
+        cout << "Masukkan pilihan anda (1/2/3): ";
         cin >> pilihan;
         switch (pilihan)
         {
@@ -61,7 +61,7 @@ void menuAdmin(){
         cout << endl;
 
         int pilihan;
-        cout << "Masukkan pilihan anda: ";
+        cout << "Masukkan pilihan anda (1/2/3): ";
         cin >> pilihan;
         
         switch (pilihan)
@@ -152,6 +152,10 @@ int loginAdmin(){
 };  
 
 void homeAdmin(){
+    ListLagu L;
+    addressLagu P;
+    string x;
+
     while(true){
         cout << "+--------------------+" << endl;
         cout << "|                    |" << endl;
@@ -161,11 +165,13 @@ void homeAdmin(){
         cout << endl;
 
         cout << "1. Tambah lagu" << endl;
-        cout << "2. Lihat semua lagu" << endl;
-        cout << "3. Kembali" << endl;
+        cout << "2. Edit lagu" << endl;
+        cout << "3. Hapus Lagu" << endl;
+        cout << "4. Lihat semua lagu" << endl;
+        cout << "5. Kembali" << endl;
 
         int pilihan;
-        cout << "Masukkan pilihan anda: ";
+        cout << "Masukkan pilihan anda (1/2/3/4/5): ";
         cin >> pilihan;
 
         switch (pilihan)
@@ -188,15 +194,76 @@ void homeAdmin(){
             break;
         }
         case 2:
+            editLagu();
+        case 3:
+            cout << "Masukan judul lagu yang ingin dihapus: ";
+            cin >> x;
+            deleteLagu(L, P, x);
+             break;
+        case 4:
             showAllLagu(masterLagu);
             break;
-        case 3:
+        case 5:
             return;
         default:
             cout << "Pilihan tidak valid!\n";
         }
     }
 };
+
+void editLagu(){
+while (true){
+        cout << "+--------------------+" << endl;
+        cout << "|                    |" << endl;
+        cout << "|       Spitipi      |" << endl;
+        cout << "|                    |" << endl;
+        cout << "+--------------------+" << endl;
+        cout << endl;
+
+        cout << "Ingin edit bagian apa?" << endl;
+        cout << "1. ID" << endl;
+        cout << "2. Judul" << endl;
+        cout << "3. Penyanyi" << endl;
+        cout << "4. Album" << endl;
+        cout << "5. Genre" << endl;
+        cout << "6. Durasi" << endl;
+        cout << "7. Back to menu" << endl;
+        cout << endl;
+
+        int pilihan;
+        cout << "Masukkan pilihan anda (1/2/3): ";
+        cin >> pilihan;
+
+        switch (pilihan)
+        {
+        case 1:
+            
+            break;
+        case 2: 
+
+             break;
+        case 3:
+            
+             break;
+        case 4:
+
+            break;
+        case 5:
+            
+             break;
+        case 6:
+            
+             break;
+        case 7:
+            return;
+        default:
+            cout << "Inputan anda salah, ulangi lagi!" << endl;
+            break;
+        }
+    }
+
+}
+
 
 void menuUser(){
     while (true){
@@ -213,7 +280,7 @@ void menuUser(){
         cout << endl;
 
         int pilihan;
-        cout << "Masukkan pilihan anda: ";
+        cout << "Masukkan pilihan anda (1/2/3): ";
         cin >> pilihan;
 
         switch (pilihan)
@@ -224,7 +291,7 @@ void menuUser(){
         case 2: {
             int indexUser = loginUser();
             if (indexUser != -1 && indexUser != -2){
-                // fungsi menu user setelah login
+                homeUser();
             }
             break;
         }
@@ -280,7 +347,7 @@ int loginUser(){
     string username, password;
 
     if (dataUser.empty()){
-        cout << "Belum ada akun user yang terbuat" << endl;
+        cout << "Belum ada akun user yang dibuat" << endl;
         return -2;
     }
 
@@ -300,3 +367,34 @@ int loginUser(){
     return -1;
 }
 
+void homeUser(){
+    while(true){
+        cout << "+--------------------+" << endl;
+        cout << "|                    |" << endl;
+        cout << "|       Spitipi      |" << endl;
+        cout << "|                    |" << endl;
+        cout << "+--------------------+" << endl;
+        cout << endl;
+
+        showAllLagu(masterLagu);
+        cout << "1. Mencari lagu" << endl;
+        cout << "2. Back to menu" << endl;
+        cout << endl;
+
+        int pilihan;
+        cout << "Masukkan pilihan anda (1/2): ";
+        cin >> pilihan;
+
+        switch (pilihan)
+        {
+        case 1: {
+            
+            break;
+        }
+        case 2:
+            return;
+        default:
+            cout << "Pilihan tidak valid!\n";
+        }
+    }
+};

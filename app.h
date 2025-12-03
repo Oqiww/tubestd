@@ -28,11 +28,14 @@ void menuAdmin();
 void signUpAdmin();
 int loginAdmin();
 void homeAdmin();
+void editLagu();
+
 
 // Menu untuk user
 void menuUser();
 void signUpUser();
 int loginUser();
+void homeUser();
 
 
 #endif
