@@ -231,7 +231,7 @@ while (true){
         cout << endl;
 
         int pilihan;
-        cout << "Masukkan pilihan anda (1/2/3): ";
+        cout << "Masukkan pilihan anda (1/2/3/4/5/6/7): ";
         cin >> pilihan;
 
         switch (pilihan)

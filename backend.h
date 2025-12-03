@@ -29,7 +29,8 @@ void createListLagu(ListLagu &L);
 addressLagu createElmLagu(Lagu data);
 void insertLastLagu(ListLagu &L, addressLagu P);
 void showAllLagu(ListLagu L);
-addressLagu searchLagu(ListLagu L, string x);
+addressLagu searchLaguJudul(ListLagu L, string x);
+addressLagu searchLaguID(ListLagu L, int x);
 void deleteLagu(ListLagu &L, addressLagu P, string x);
 
 

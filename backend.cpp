@@ -44,11 +44,22 @@ void showAllLagu(ListLagu L){
         P = P->next;
     }
 };
-addressLagu searchLagu(ListLagu L, string x){
+addressLagu searchLaguJudul(ListLagu L, string x){
     addressLagu P;
     P = L.first;
     while (P != nullptr){
         if (P->info.judul == x){
+            return P;
+        }
+        P = P->next;
+    }
+    return nullptr;
+}
+addressLagu searchLaguID(ListLagu L, int x){
+    addressLagu P;
+    P = L.first;
+    while (P != nullptr){
+        if (P->info.id == x){
             return P;
         }
         P = P->next;
