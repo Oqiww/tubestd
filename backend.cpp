@@ -44,3 +44,130 @@ void showAllLagu(ListLagu L){
         P = P->next;
     }
 };
+addressLagu searchLaguJudul(ListLagu L, string x){
+    addressLagu P;
+    P = L.first;
+    while (P != nullptr){
+        if (P->info.judul == x){
+            return P;
+        }
+        P = P->next;
+    }
+    return nullptr;
+}
+addressLagu searchLaguID(ListLagu L, int x){
+    addressLagu P;
+    P = L.first;
+    while (P != nullptr){
+        if (P->info.id == x){
+            return P;
+        }
+        P = P->next;
+    }
+    return nullptr;
+}
+
+
+void deleteLagu(ListLagu &L, string x){
+    addressLagu Prec, q;
+    q = searchLaguJudul(L, x);
+    if (q){
+        if (q == L.first && q == L.last){
+            L.first = nullptr;
+            L.last = nullptr;
+        } else if (q == L.first){
+            L.first = q->next;
+            q->next = nullptr;
+            L.first->prev = nullptr;
+        }else if (q == L.last){
+            L.last = L.last->prev;
+            q->prev = nullptr;
+            L.last->next = nullptr;
+        }else{
+            Prec = q->prev;
+            Prec->next = q->next;
+            q->next->prev = Prec;
+            q->next = nullptr;
+            q->prev = nullptr;
+
+        }
+        cout << "Lagu berhasil dihapus." << endl;
+    }else{
+        cout << "Lagu yang ingin anda hapus tidak ada di Spitipi" << endl;
+    }
+
+}
+
+// =======================
+// IMPLEMENTASI ADMIN (SLL)
+// =======================
+void createListAdmin(ListAdmin &L) {
+    L.first = nullptr;
+}
+
+addressAdmin createElmAdmin(Admin data) {
+    addressAdmin P = new elmAdmin;
+    P->info = data;
+    P->next = nullptr;
+    return P;
+}
+
+void insertLastAdmin(ListAdmin &L, addressAdmin P) {
+    if (L.first == nullptr) {
+        L.first = P;
+    } else {
+        addressAdmin last = L.first;
+        while (last->next != nullptr) {
+            last = last->next;
+        }
+        last->next = P;
+    }
+}
+
+addressAdmin searchAdmin(ListAdmin L, string username) {
+    addressAdmin P = L.first;
+    while (P != nullptr) {
+        if (P->info.username == username) {
+            return P;
+        }
+        P = P->next;
+    }
+    return nullptr;
+}
+
+// =======================
+// IMPLEMENTASI USER (SLL)
+// =======================
+void createListUser(ListUser &L) {
+    L.first = nullptr;
+}
+
+addressUser createElmUser(User data) {
+    addressUser P = new elmUser;
+    P->info = data;
+    P->next = nullptr;
+    return P;
+}
+
+void insertLastUser(ListUser &L, addressUser P) {
+    if (L.first == nullptr) {
+        L.first = P;
+    } else {
+        addressUser last = L.first;
+        while (last->next != nullptr) {
+            last = last->next;
+        }
+        last->next = P;
+    }
+}
+
+addressUser searchUser(ListUser L, string username) {
+    addressUser P = L.first;
+    while (P != nullptr) {
+        if (P->info.username == username) {
+            return P;
+        }
+        P = P->next;
+    }
+    return nullptr;
+}
