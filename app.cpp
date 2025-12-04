@@ -187,11 +187,12 @@ void homeAdmin(addressAdmin adminLogin){
         }
         case 2:
             editLagu();
+            break;
         case 3:
             cout << "Masukan judul lagu yang ingin dihapus: ";
             cin >> x;
             deleteLagu(masterLagu, x);
-             break;
+            break;
         case 4:
             showAllLagu(masterLagu);
             break;
