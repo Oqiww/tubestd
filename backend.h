@@ -31,7 +31,7 @@ void insertLastLagu(ListLagu &L, addressLagu P);
 void showAllLagu(ListLagu L);
 addressLagu searchLaguJudul(ListLagu L, string x);
 addressLagu searchLaguID(ListLagu L, int x);
-void deleteLagu(ListLagu &L, addressLagu P, string x);
+void deleteLagu(ListLagu &L, string x);
 
 
 #endif
