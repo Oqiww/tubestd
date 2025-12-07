@@ -281,8 +281,7 @@ void menuUser(){
         cout << "Masukkan pilihan anda (1/2/3): ";
         cin >> pilihan;
 
-        switch (pilihan)
-        {
+        switch (pilihan){
         case 1:
             signUpUser();
             break;
@@ -329,8 +328,8 @@ void signUpUser(){
             newUser.username = username;
             newUser.password = password;
             
-            // Insert pakai SLL Insert
             insertLastUser(dataUser, createElmUser(newUser));
+            userCreatePlaylistSpotikuy(masterPlaylist, createElmUser(newUser), "Liked Songs", true);
             cout << "Akun User berhasil dibuat!" << endl;
             break;
         }
@@ -363,6 +362,7 @@ addressUser loginUser(){
 }
 
 void homeUser(addressUser userLogin){
+    string namaP; 
     while(true){
         cout <<  "+====================+" << endl;
         cout <<  "|                     |" << endl;
@@ -371,48 +371,63 @@ void homeUser(addressUser userLogin){
         cout <<  "+====================+" << endl;
         cout << endl;
 
-
-        cout << "\n--- Home User (" << userLogin->info.username << ") ---" << endl;
-        showAllLagu(masterLagu);
-        cout << "1. Mencari lagu" << endl;
-        cout << "2. Tambah ke playlist" << endl;
-        cout << "3. Lihat playlist" << endl;
-        cout << "4. Back to menu" << endl;
-        cout << endl;
+        cout << "\n[ YOUR LIBRARY ]\n";
+        addressRelasiPlaylist R = userLogin->listPlaylist.first;
+        if (R == nullptr){
+            cout << "(Library Kosong)" << endl;
+        } 
+        int i = 1;
+        while (R != nullptr) {
+            cout << i++ << ". " << R->recPlaylist->info.namaPlaylist;
+            if (R->recPlaylist->info.isFavorite) {
+                cout << " [♥]";
+            }
+            cout << " (" << (R->recPlaylist->info.pembuat == userLogin->info.username ? "Owner" : "Followed") << ")" << endl;
+            R = R->next;
+        }
+        cout << "--------------------------------\n";
+        cout << "[1] Buka Playlist (Play/Edit)" << endl;
+        cout << "[2] Buat Playlist Baru" << endl;
+        cout << "[3] Cari & Follow Playlist" << endl;
+        cout << "[4] Lihat Semua Lagu Global" << endl;
+        cout << "[5] Exit" << endl;
+        cout << "Pilihan: ";
 
         int pilihan;
-        cout << "Masukkan pilihan anda (1/2/3/4): ";
+        cout << "Masukkan pilihan anda (1/2/3/4/5): ";
         cin >> pilihan;
         string cari;
 
-        switch (pilihan)
-        {
+        switch (pilihan){
         case 1: {
-            cout << "Masukkan judul lagu: ";
-            cin >> cari;
-            addressLagu hasil = searchLaguJudul(masterLagu, cari);
-            if (hasil) {
-                cout << "Ditemukan: " << hasil->info.judul << " - " << hasil->info.penyanyi << endl;
-            } else {
-                cout << "Lagu tidak ditemukan." << endl;
+         
+            cout << "Nama Playlist: "; 
+            cin >> namaP;
+            addressPlaylist target = nullptr;
+            addressRelasiPlaylist RP = userLogin->listPlaylist.first;
+            while (RP) {
+                if (RP->recPlaylist->info.namaPlaylist == namaP) { 
+                    target = RP->recPlaylist; 
+                    break; 
+                }
+                RP = RP->next;
+            }
+            
+            if (target) {
+                menuDetailPlaylist(userLogin, target);
+            } else { 
+                cout << "Playlist tidak ditemukan di library Anda." << endl; 
             }
             break;
         }
         case 2:{
-            string judul;
-            cout << "Judul lagu: ";
-            cin >> judul;
-
-            addressLagu L = searchLaguJudul(masterLagu, judul);
-
-            if (L != nullptr){
-                addToPlaylist(userLogin, L);
-            } else {
-                cout << "Lagu tidak ditemukan!" << endl;
-            }
+            cout << "Nama Playlist Baru: " << endl; 
+            cin >> namaP;
+            userCreatePlaylist(masterPlaylist, userLogin, namaP, false);
             break;
         }
         case 3:{
+            // belum edit
             showPlaylist(userLogin);
             break;
         }
