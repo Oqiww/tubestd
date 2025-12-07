@@ -368,11 +368,13 @@ void homeUser(addressUser userLogin){
         cout << "\n--- Home User (" << userLogin->info.username << ") ---" << endl;
         showAllLagu(masterLagu);
         cout << "1. Mencari lagu" << endl;
-        cout << "2. Back to menu" << endl;
+        cout << "2. Tambah ke playlist" << endl;
+        cout << "3. Lihat playlist" << endl;
+        cout << "4. Back to menu" << endl;
         cout << endl;
 
         int pilihan;
-        cout << "Masukkan pilihan anda (1/2): ";
+        cout << "Masukkan pilihan anda (1/2/3/4): ";
         cin >> pilihan;
         string cari;
 
@@ -389,7 +391,26 @@ void homeUser(addressUser userLogin){
             }
             break;
         }
-        case 2:
+        case 2:{
+            string judul;
+            cout << "Judul lagu: ";
+            cin >> judul;
+
+            addressLagu L = searchLaguJudul(masterLagu, judul);
+
+            if (L != nullptr){
+                addToPlaylist(userLogin, L);
+            } else {
+                cout << "Lagu tidak ditemukan!" << endl;
+            }
+            break;
+        }
+        case 3:{
+            showPlaylist(userLogin);
+            break;
+        }
+
+        case 4:
             return;
         default:
             cout << "Pilihan tidak valid!\n";

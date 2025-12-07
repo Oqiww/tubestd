@@ -25,6 +25,12 @@ struct ListLagu{
     addressLagu last;
 };
 
+
+
+
+addressPlaylist createElmPlaylist(addressLagu L);
+void addToPlaylist(addressUser U, addressLagu L);
+void showPlaylist(addressUser U);
 void createListLagu(ListLagu &L);
 addressLagu createElmLagu(Lagu data);
 void insertLastLagu(ListLagu &L, addressLagu P);

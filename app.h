@@ -3,22 +3,27 @@
 #include <iostream>
 using namespace std;
 
+typedef struct elmPlaylist *addressPlaylist;
+
+struct elmPlaylist{
+    addressLagu lagu;
+    addressPlaylist next;
+};
 // Membuat struct untuk role User
 struct User {
     string username;
     string password;
+    addressPlaylist firstPlaylist;
 };
 
 typedef struct elmUser *addressUser;
-struct elmUser
-{
+
+struct elmUser{
     User info;
     addressUser next;
-
 };
 
-struct ListUser
-{
+struct ListUser{
     addressUser first;
 };
 
