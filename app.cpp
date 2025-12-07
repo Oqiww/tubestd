@@ -1,14 +1,21 @@
 #include "app.h"
 #include "backend.h"
+
+// Variabel Global
 ListAdmin dataAdmin;
 ListUser dataUser;
 ListLagu masterLagu;
+ListPlaylist masterPlaylist;
 
 
 void menu(){
     createListLagu(masterLagu);
+    createListPlaylist(masterPlaylist);
     createListAdmin(dataAdmin);
     createListUser(dataUser);
+
+    //data dummy
+
 
     bool ulang = true;
     while (ulang){
@@ -50,6 +57,7 @@ void menu(){
 
 void menuAdmin(){
     while (true){
+        //perbaiki tampilan
         cout << "+--------------------+" << endl;
         cout << "|                    |" << endl;
         cout << "|       Spitipi      |" << endl;
@@ -72,12 +80,10 @@ void menuAdmin(){
             signUpAdmin();
             break;
         case 2: {
-            addressAdmin loggedInAdmin = loginAdmin();
-            if (loggedInAdmin != nullptr){
-                homeAdmin(loggedInAdmin);
+            addressAdmin adm = loginAdmin();
+            if (adm) homeAdmin(adm);
             }
             break;
-        }
         case 3:
             return;
         default:
@@ -89,8 +95,9 @@ void menuAdmin(){
 
 void signUpAdmin(){
     string username, password;
-    Admin roleadmin;
+    Admin data;
     while (true){
+        //perbaiki tampilan
         cout << "+--------------------+" << endl;
         cout << "|                    |" << endl;
         cout << "|       Spitipi      |" << endl;
@@ -102,17 +109,14 @@ void signUpAdmin(){
         cout << "Masukkan username anda: ";
         cin >> username;
 
-        if (searchAdmin(dataAdmin, username) != nullptr) {
-            cout << "Username sudah terpakai! Coba yang lain.\n";
-        } else {
-            cout << "Masukkan password: ";
+        if (searchAdmin(dataAdmin, username)) {
+            cout << "Username ada!\n";
+        }else{
+            cout << "Password: "; 
             cin >> password;
-
-            roleadmin.username = username;
-            roleadmin.password = password;
-
-            // Masukkan ke List pakai INSERT (SLL)
-            insertLastAdmin(dataAdmin, createElmAdmin(roleadmin));
+            data.username = username;
+            data.password = password;
+            insertLastAdmin(dataAdmin, createElmAdmin(data));
             cout << "Akun Admin berhasil dibuat!" << endl;
             break;
         }
@@ -127,6 +131,7 @@ addressAdmin loginAdmin(){
         return nullptr;
     }
 
+    // tampilan perbaiki
     cout << "\n--- Login Admin ---" << endl;
     cout << "Masukkan username: ";
     cin >> username;
@@ -145,9 +150,9 @@ addressAdmin loginAdmin(){
 };  
 
 void homeAdmin(addressAdmin adminLogin){
-    string x;
-
+    string cariJudul;
     while(true){
+        // perbaiki tampilan
         cout << "+--------------------+" << endl;
         cout << "|                    |" << endl;
         cout << "|       Spitipi      |" << endl;
@@ -166,8 +171,7 @@ void homeAdmin(addressAdmin adminLogin){
         cout << "Masukkan pilihan anda (1/2/3/4/5): ";
         cin >> pilihan;
 
-        switch (pilihan)
-        {
+        switch (pilihan){
         case 1: {
             Lagu L;
             cout << "ID Lagu: ";
@@ -178,20 +182,40 @@ void homeAdmin(addressAdmin adminLogin){
             cin >> L.penyanyi;
             cout << "Durasi (ex: 03:20): ";
             cin >> L.durasi;
+            L.durasiDetik = 5;
             cout << "Genre: ";
             cin >> L.genre;
 
             insertLastLagu(masterLagu, createElmLagu(L));
-            cout << "Lagu berhasil ditambahkan!\n";
+            cout << "Lagu berhasil ditambahkan!" << endl;
             break;
         }
         case 2:
-            editLagu();
+            cout << "Masukan judul lagu yang mau diedit: ";
+            cin >> cariJudul;
+            addressLagu P = searchLaguJudul(masterLagu, cariJudul);
+            
+            if (P){
+                cout << "--- Data Baru ---\n";
+                string judulBaru, penyanyiBaru, durasaiBaru, genreBaru;
+                cout << "Judul Baru: ";
+                cin >> judulBaru;
+                cout << "Penyanyi Baru: "; 
+                cin >> penyanyiBaru;
+                cout << "Durasi Baru: "; 
+                cin >> durasaiBaru;
+                cout << "Genre Baru: "; 
+                cin >> genreBaru;
+                editLaguGlobal(masterLagu, judulBaru, penyanyiBaru, durasaiBaru, genreBaru, P);
+                break;
+            } else {
+                cout << "Lagu tidak ditemukan!" << endl;
+            }
             break;
         case 3:
             cout << "Masukan judul lagu yang ingin dihapus: ";
-            cin >> x;
-            deleteLagu(masterLagu, x);
+            cin >> cariJudul;
+            deleteLaguGlobal(masterLagu, masterPlaylist, cariJudul);
             break;
         case 4:
             showAllLagu(masterLagu);
@@ -203,59 +227,6 @@ void homeAdmin(addressAdmin adminLogin){
         }
     }
 };
-
-void editLagu(){
-while (true){
-        cout << "+--------------------+" << endl;
-        cout << "|                    |" << endl;
-        cout << "|       Spitipi      |" << endl;
-        cout << "|                    |" << endl;
-        cout << "+--------------------+" << endl;
-        cout << endl;
-
-        cout << "Ingin edit bagian apa?" << endl;
-        cout << "1. ID" << endl;
-        cout << "2. Judul" << endl;
-        cout << "3. Penyanyi" << endl;
-        cout << "4. Album" << endl;
-        cout << "5. Genre" << endl;
-        cout << "6. Durasi" << endl;
-        cout << "7. Back to menu" << endl;
-        cout << endl;
-
-        int pilihan;
-        cout << "Masukkan pilihan anda (1/2/3/4/5/6/7): ";
-        cin >> pilihan;
-
-        switch (pilihan)
-        {
-        case 1:
-            
-            break;
-        case 2: 
-
-             break;
-        case 3:
-            
-             break;
-        case 4:
-
-            break;
-        case 5:
-            
-             break;
-        case 6:
-            
-             break;
-        case 7:
-            return;
-        default:
-            cout << "Inputan anda salah, ulangi lagi!" << endl;
-            break;
-        }
-    }
-
-}
 
 
 void menuUser(){
