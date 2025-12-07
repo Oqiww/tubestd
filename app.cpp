@@ -19,12 +19,13 @@ void menu(){
 
     bool ulang = true;
     while (ulang){
-        cout << "+--------------------+" << endl;
-        cout << "|                    |" << endl;
-        cout << "|       Spitipi      |" << endl;
-        cout << "|                    |" << endl;
-        cout << "+--------------------+" << endl;
+        cout <<  "+====================+" << endl;
+        cout <<  "|                     |" << endl;
+        cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
+        cout <<  "|                     |" << endl;
+        cout <<  "+====================+" << endl;
         cout << endl;
+
 
         // Pilihan menu
         cout << "1. Admin" << endl;
@@ -58,12 +59,13 @@ void menu(){
 void menuAdmin(){
     while (true){
         //perbaiki tampilan
-        cout << "+--------------------+" << endl;
-        cout << "|                    |" << endl;
-        cout << "|       Spitipi      |" << endl;
-        cout << "|                    |" << endl;
-        cout << "+--------------------+" << endl;
+        cout <<  "+====================+" << endl;
+        cout <<  "|                     |" << endl;
+        cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
+        cout <<  "|                     |" << endl;
+        cout <<  "+====================+" << endl;
         cout << endl;
+
 
         cout << "1. Sign up" << endl;
         cout << "2. Login" << endl;
@@ -98,12 +100,13 @@ void signUpAdmin(){
     Admin data;
     while (true){
         //perbaiki tampilan
-        cout << "+--------------------+" << endl;
-        cout << "|                    |" << endl;
-        cout << "|       Spitipi      |" << endl;
-        cout << "|                    |" << endl;
-        cout << "+--------------------+" << endl;
+        cout <<  "+====================+" << endl;
+        cout <<  "|                     |" << endl;
+        cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
+        cout <<  "|                     |" << endl;
+        cout <<  "+====================+" << endl;
         cout << endl;
+
 
         bool cek = true;
         cout << "Masukkan username anda: ";
@@ -153,11 +156,11 @@ void homeAdmin(addressAdmin adminLogin){
     string cariJudul;
     while(true){
         // perbaiki tampilan
-        cout << "+--------------------+" << endl;
-        cout << "|                    |" << endl;
-        cout << "|       Spitipi      |" << endl;
-        cout << "|                    |" << endl;
-        cout << "+--------------------+" << endl;
+        cout <<  "+====================+" << endl;
+        cout <<  "|                     |" << endl;
+        cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
+        cout <<  "|                     |" << endl;
+        cout <<  "+====================+" << endl;
         cout << "\n--- Dashboard Admin (" << adminLogin->info.username << ") ---" << endl;
         cout << endl;
 
@@ -231,12 +234,13 @@ void homeAdmin(addressAdmin adminLogin){
 
 void menuUser(){
     while (true){
-        cout << "+--------------------+" << endl;
-        cout << "|                    |" << endl;
-        cout << "|       Spitipi      |" << endl;
-        cout << "|                    |" << endl;
-        cout << "+--------------------+" << endl;
+        cout <<  "+====================+" << endl;
+        cout <<  "|                     |" << endl;
+        cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
+        cout <<  "|                     |" << endl;
+        cout <<  "+====================+" << endl;
         cout << endl;
+
 
         cout << "1. Sign up" << endl;
         cout << "2. Login" << endl;
@@ -273,12 +277,13 @@ void signUpUser(){
     User newUser;
 
     while (true){
-        cout << "+--------------------+" << endl;
-        cout << "|                    |" << endl;
-        cout << "|    User Sign Up    |" << endl;
-        cout << "|                    |" << endl;
-        cout << "+--------------------+" << endl;
+        cout <<  "+====================+" << endl;
+        cout <<  "|                     |" << endl;
+        cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
+        cout <<  "|                     |" << endl;
+        cout <<  "+====================+" << endl;
         cout << endl;
+
 
         bool cek = true;
 
@@ -329,12 +334,13 @@ addressUser loginUser(){
 
 void homeUser(addressUser userLogin){
     while(true){
-        cout << "+--------------------+" << endl;
-        cout << "|                    |" << endl;
-        cout << "|       Spitipi      |" << endl;
-        cout << "|                    |" << endl;
-        cout << "+--------------------+" << endl;
+        cout <<  "+====================+" << endl;
+        cout <<  "|                     |" << endl;
+        cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
+        cout <<  "|                     |" << endl;
+        cout <<  "+====================+" << endl;
         cout << endl;
+
 
         cout << "\n--- Home User (" << userLogin->info.username << ") ---" << endl;
         showAllLagu(masterLagu);
