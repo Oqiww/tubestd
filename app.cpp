@@ -15,7 +15,37 @@ void menu(){
     createListUser(dataUser);
 
     //data dummy
+    Lagu l1 = {1, "Hati-Hati di Jalan", "Tulus", "03:45", 5, "Pop"}; 
+    Lagu l2 = {2, "Komang", "Raim Laode", "03:20", 5, "Ballad"};
+    Lagu l3 = {3, "Sial", "Mahalini", "04:10", 5, "Pop"};
+    Lagu l4 = {4, "Secukupnya", "Hindia", "04:05", 5, "Indie"};
+    Lagu l5 = {5, "Evaluasi", "Hindia", "04:20", 5, "Indie"};
+    Lagu l6 = {6, "Membasuh", "Hindia", "05:01", 5, "Indie"};
+    Lagu l7 = {7, "Dehidrasi", "Hindia", "03:52", 5, "Indie"};
+    Lagu l8 = {8, "We Don't Talk Enought", "Hindia", "04:11", 5, "Indie"};
+    Lagu l9 = {9, "Tabola Bale", "Silet Open Up", "04:35", 5, "Hipdut"};
+    Lagu l10 = {10, "Kali Kedua", "Raisa", "03:51", 5, "Pop"};
+    Lagu l11 = {11, "Serba Salah", "Raisa", "04:13", 5, "Pop"};
+    Lagu l12 = {12, "Bahasa Kalbu", "Raisa", "04:26", 5, "Pop"};
+    Lagu l13 = {13, "Usai", "Tiara Andini", "03:38", 5, "Pop"};
+    Lagu l14 = {14, "Janji Setia", "Tiara Andini", "04:29", 5, "Pop"};
+    Lagu l15 = {15, "Cukup", "Ziva Magnolya", "04:05", 5, "Pop"};
 
+    insertLastLagu(masterLagu, createElmLagu(l1));
+    insertLastLagu(masterLagu, createElmLagu(l2));
+    insertLastLagu(masterLagu, createElmLagu(l3));
+    insertLastLagu(masterLagu, createElmLagu(l4));
+    insertLastLagu(masterLagu, createElmLagu(l5));
+    insertLastLagu(masterLagu, createElmLagu(l6));
+    insertLastLagu(masterLagu, createElmLagu(l7));
+    insertLastLagu(masterLagu, createElmLagu(l8));
+    insertLastLagu(masterLagu, createElmLagu(l9));
+    insertLastLagu(masterLagu, createElmLagu(l10));
+    insertLastLagu(masterLagu, createElmLagu(l11));
+    insertLastLagu(masterLagu, createElmLagu(l12));
+    insertLastLagu(masterLagu, createElmLagu(l13));
+    insertLastLagu(masterLagu, createElmLagu(l14));
+    insertLastLagu(masterLagu, createElmLagu(l15));
 
     bool ulang = true;
     while (ulang){
