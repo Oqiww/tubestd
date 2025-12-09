@@ -394,8 +394,18 @@ void homeUser(addressUser userLogin){
             if (R->recPlaylist->info.isFavorite) {
                 cout << " [♥]";
             }
-            cout << " (" << (R->recPlaylist->info.pembuat == userLogin->info.username ? "Owner" : "Followed") << ")" << endl;
+            cout << " (";
+
+            if (R->recPlaylist->info.pembuat == userLogin->info.username) {
+                cout << "Owner";
+            } else {
+                cout << "Followed";
+            }
+
+            cout << ")" << endl;
+
             R = R->next;
+
         }
         cout << "--------------------------------\n";
         cout << "[1] Buka Playlist (Play/Edit)" << endl;
