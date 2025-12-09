@@ -47,6 +47,21 @@ void menu(){
     insertLastLagu(masterLagu, createElmLagu(l14));
     insertLastLagu(masterLagu, createElmLagu(l15));
 
+    // User 1
+    User u1_data = {1, "Rizky_Musik"}; 
+    addressUser u1 = createElmUser(u1_data);
+    insertLastUser(masterUser, u1);
+
+    // User 2
+    User u2_data = {2, "Siti_Playlist"};
+    addressUser u2 = createElmUser(u2_data);
+    insertLastUser(masterUser, u2);
+
+    // User 3
+    User u3_data = {3, "Budi_Enjoy"};
+    addressUser u3 = createElmUser(u3_data); 
+    insertLastUser(masterUser, u3);
+
     bool ulang = true;
     while (ulang){
         cout <<  "+====================+" << endl;
@@ -129,7 +144,6 @@ void signUpAdmin(){
     string username, password;
     Admin data;
     while (true){
-        //perbaiki tampilan
         cout <<  "+====================+" << endl;
         cout <<  "|                     |" << endl;
         cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
@@ -164,7 +178,6 @@ addressAdmin loginAdmin(){
         return nullptr;
     }
 
-    // tampilan perbaiki
     cout << "\n--- Login Admin ---" << endl;
     cout << "Masukkan username: ";
     cin >> username;
@@ -185,7 +198,6 @@ addressAdmin loginAdmin(){
 void homeAdmin(addressAdmin adminLogin){
     string cariJudul;
     while(true){
-        // perbaiki tampilan
         cout <<  "+====================+" << endl;
         cout <<  "|                     |" << endl;
         cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
