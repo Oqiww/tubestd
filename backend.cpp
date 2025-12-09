@@ -1,8 +1,53 @@
 #include "backend.h"
 
 // =======================
-// IMPLEMENTASI LAGU
+// IMPLEMENTASI Playlist (MLL)
 // =======================
+addressPlaylist createElmPlaylist(addressLagu L){
+    addressPlaylist P = new elmPlaylist;
+    P->lagu = L;
+    P->next = nullptr;
+    return P;
+}
+
+void addToPlaylist(addressUser U, addressLagu L) {
+    if (!U || !L) return;
+
+    addressPlaylist P = createElmPlaylist(L);
+
+    if (U->info.firstPlaylist == nullptr) {
+        U->info.firstPlaylist = P;
+    } else {
+        addressPlaylist Q = U->info.firstPlaylist;
+        while (Q->next != nullptr) {
+            Q = Q->next;
+        }
+        Q->next = P;
+    }
+
+    cout << "Lagu berhasil ditambahkan ke playlist " << U->info.username << endl;
+}
+
+void showPlaylist(addressUser U) {
+    if (!U) {
+        cout << "User tidak valid\n";
+        return;
+    }
+
+    if (U->info.firstPlaylist == nullptr) {
+        cout << "Playlist kosong\n";
+        return;
+    }
+
+    addressPlaylist P = U->info.firstPlaylist;
+    cout << "\n=== PLAYLIST " << U->info.username << " ===\n";
+    while (P != nullptr) {
+        cout << "- " << P->lagu->info.judul
+             << " (" << P->lagu->info.penyanyi << ")\n";
+        P = P->next;
+    }
+}
+
 void createListLagu(ListLagu &L){
     L.first = nullptr;
     L.last = nullptr;
@@ -129,7 +174,11 @@ addressAdmin searchAdmin(ListAdmin L, string username) {
 // =======================
 void createListUser(ListUser &L) { L.first = nullptr; }
 addressUser createElmUser(User data) {
-    addressUser P = new elmUser; P->info = data; P->listPlaylist.first = nullptr; P->listPlaylist.last = nullptr; P->next = nullptr; return P;
+    addressUser P = new elmUser;
+    P->info = data;
+    P->info.firstPlaylist = nullptr;
+    P->next = nullptr;
+    return P;
 }
 void insertLastUser(ListUser &L, addressUser P) {
     if (L.first == nullptr) L.first = P;

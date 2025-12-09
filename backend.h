@@ -6,9 +6,6 @@
 #include <iomanip> // Untuk merapikan tabel UI
 using namespace std;
 
-// ==========================================
-// 1. STRUKTUR DATA LAGU
-// ==========================================
 struct Lagu {
     int id;
     string judul, penyanyi;
@@ -30,9 +27,6 @@ struct ListLagu{
     addressLagu last;
 };
 
-// ==========================================
-// 2. STRUKTUR RELASI: PLAYLIST -> LAGU
-// ==========================================
 typedef struct elmRelasiLagu *addressRelasiLagu;
 
 struct elmRelasiLagu {
@@ -46,9 +40,6 @@ struct ListRelasiLagu {
     addressRelasiLagu last;
 };
 
-// ==========================================
-// 3. STRUKTUR DATA PLAYLIST
-// ==========================================
 struct InfotypePlaylist {
     int id;
     string namaPlaylist;
@@ -70,9 +61,6 @@ struct ListPlaylist {
     addressPlaylist last;
 };
 
-// ==========================================
-// 4. STRUKTUR RELASI: USER -> PLAYLIST
-// ==========================================
 typedef struct elmRelasiPlaylist *addressRelasiPlaylist;
 
 struct elmRelasiPlaylist {
@@ -86,9 +74,6 @@ struct ListRelasiPlaylist {
     addressRelasiPlaylist last;
 };
 
-// ==========================================
-// 5. STRUKTUR DATA USER
-// ==========================================
 struct User {
     string username;
     string password;
@@ -106,9 +91,6 @@ struct ListUser {
     addressUser first;
 };
 
-// ==========================================
-// 6. STRUKTUR DATA ADMIN
-// ==========================================
 struct Admin {
     string username;
     string password;
@@ -126,9 +108,6 @@ struct ListAdmin {
 };
 
 
-// ==========================================
-// PRIMITIF FUNCTIONS
-// ==========================================
 
 // LAGU
 void createListLagu(ListLagu &L);
@@ -159,11 +138,11 @@ void insertLastUser(ListUser &L, addressUser P);
 addressUser searchUser(ListUser L, string username);
 
 // RELASI & FITUR
-void userCreatePlaylist(ListPlaylist &LP, addressUser U, string namaPlaylist, bool isFav);
-void addSongToPlaylist(addressUser U, string namaPlaylist, addressLagu P_Lagu);
-void removeSongFromPlaylist(addressUser U, string namaPlaylist, string judulLagu);
+void userCreatePlaylistSpotikuy(ListPlaylist &LP, addressUser U, string namaPlaylist, bool isFav);
+void tambahLaguKePlaylistSpotikuy(addressUser U, string namaPlaylist, addressLagu P_Lagu);
+void hapusLaguDariPlaylistSpotikuy(addressUser U, string namaPlaylist, string judulLagu);
 // Fungsi tampil diperbarui untuk UI
-void showPlaylistContent(addressPlaylist P); 
-void userFollowPlaylist(addressUser U, addressPlaylist P);
+void tampilkanPlaylistSpotikuy(addressPlaylist P); 
+void pengikutPenggunaPlaylistSpotikuy(addressUser U, addressPlaylist P);
 
 #endif
