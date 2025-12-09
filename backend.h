@@ -48,7 +48,7 @@ struct InfotypePlaylist {
 };
 
 typedef struct elmPlaylist *addressPlaylist;
-
+//tes
 struct elmPlaylist {
     InfotypePlaylist info;
     ListRelasiLagu listLagu; 
