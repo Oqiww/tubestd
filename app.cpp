@@ -48,19 +48,19 @@ void menu(){
     insertLastLagu(masterLagu, createElmLagu(l15));
 
     // User 1
-    User u1_data = {1, "Rizky_Musik"}; 
+    User u1_data = {"rosandi", "1234"}; 
     addressUser u1 = createElmUser(u1_data);
-    insertLastUser(masterUser, u1);
+    insertLastUser(dataUser, u1);
 
     // User 2
-    User u2_data = {2, "Siti_Playlist"};
+    User u2_data = {"nada", "1234"};
     addressUser u2 = createElmUser(u2_data);
-    insertLastUser(masterUser, u2);
+    insertLastUser(dataUser, u2);
 
     // User 3
-    User u3_data = {3, "Budi_Enjoy"};
+    User u3_data = {"syauqi", "1234"};
     addressUser u3 = createElmUser(u3_data); 
-    insertLastUser(masterUser, u3);
+    insertLastUser(dataUser, u3);
 
     bool ulang = true;
     while (ulang){
