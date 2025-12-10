@@ -1,5 +1,8 @@
 #include "app.h"
 #include "backend.h"
+#include <thread>
+#include <chrono>
+using namespace std;
 
 // Variabel Global
 ListAdmin dataAdmin;
@@ -408,7 +411,6 @@ void homeUser(addressUser userLogin){
         int pilihan;
         cout << "Masukkan pilihan anda (1/2/3/4/5): ";
         cin >> pilihan;
-        string cari;
 
         switch (pilihan){
         case 1: {
@@ -439,15 +441,119 @@ void homeUser(addressUser userLogin){
             break;
         }
         case 3:{
-            // belum edit
-            showPlaylist(userLogin);
+            showAllPlaylist(masterPlaylist);
+            cout << "Masukkan nama playlist yang ingin di follow: ";
+            cin >> namaP;
+            addressPlaylist P = searchPlaylist(masterPlaylist, namaP);
+            if (P) {
+                if (P->info.pembuat == userLogin->info.username) {
+                    cout << "Anda tidak dapat follow playlist sendiri :)" << endl;
+                } else {
+                    bool alreadyFollowed = false;
+                    addressRelasiPlaylist cek = userLogin->listPlaylist.first;
+                    while (cek) {
+                        if (cek->recPlaylist == P) {
+                            alreadyFollowed = true;
+                            break;
+                        }
+                        cek = cek->next;
+                    }
+                    if (!alreadyFollowed) {
+                        userFollowPlaylist(userLogin, P);
+                        cout << "Berhasil follow playlist " << namaP << "!" << endl;
+                    } else {
+                        cout << "Anda sudah follow playlist ini." << endl;
+                    }
+                }
+            } else {
+                cout << "Playlist tidak ditemukan!" << endl;
+            }
             break;
         }
-
         case 4:
+            showAllLagu(masterLagu);
+            cout << "\n(Tekan Enter untuk kembali)" << endl;
+            break;
+        case 5:
             return;
         default:
             cout << "Pilihan tidak valid!\n";
+        }
+    }
+};
+
+void musicPlayer(addressPlaylist P, int modeSort) {
+    if (P->listLagu.first == nullptr) {
+        cout << "Playlist kosong! Tambahkan lagu terlebih dahulu." << endl;
+        return;
+    }
+
+    addressRelasiLagu currentSong;
+    if (modeSort == 1) {
+        currentSong = P->listLagu.first; // Terlama (Queue)
+    }else {
+        currentSong = P->listLagu.last; // Terbaru (Stack)
+    }
+    while (currentSong != nullptr) {
+        for (int i = 1; i <= currentSong->recLagu->info.durasiDetik; i++) {
+            cout << "========================================" << endl;
+            cout << "       NOW PLAYING (" << P->info.namaPlaylist << ")      " << endl;
+            cout << "========================================" << endl;
+            cout << "Title  : " << currentSong->recLagu->info.judul << endl;
+            cout << "Artist : " << currentSong->recLagu->info.penyanyi << endl;
+            cout << "Time   : " << i << "s / " << currentSong->recLagu->info.durasiDetik << "s " << endl;
+            cout << "========================================\n";
+            cout << "[Playing...] " << endl;
+            this_thread::sleep_for(chrono::seconds(1));
+        }
+
+        bool controlLoop = true;
+        while(controlLoop) {
+            cout << "========================================" << endl;
+            cout << "       SONG FINISHED: " << currentSong->recLagu->info.judul << endl;
+            cout << "========================================" << endl;
+            cout << "[n] Next Song" << endl;
+            cout << "[p] Previous Song" << endl;
+            cout << "[s] Stop / Exit Player" << endl;
+            cout << "Pilihan: ";
+
+            char pilih;
+            cout << "Masukkan pilihan anda (n/p/s): ";
+            cin >> pilih;
+
+            switch (pilih){
+            case 's':
+                return;
+            case 'n': {
+                if (modeSort == 1) {
+                    currentSong = currentSong->next;
+                } else {
+                    currentSong = currentSong->prev;
+                }
+                if (currentSong == nullptr) {
+                    cout << "Akhir Playlist." << endl;
+                    return;
+                }
+                controlLoop = false;
+                break;
+            }
+            case 'p': {
+                if (modeSort == 1) {
+                    currentSong = currentSong->prev;
+                } else {
+                    currentSong = currentSong->next;
+                }
+                if (currentSong == nullptr) {
+                    cout << "Aawal Playlist." << endl;
+                    return;
+                }
+                controlLoop = false;
+                break;
+            }
+            default:
+                cout << "Pilihan tidak valid!" << endl;
+                break;
+            }
         }
     }
 };
