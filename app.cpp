@@ -129,10 +129,13 @@ void menuAdmin(){
         case 1:
             signUpAdmin();
             break;
-        case 2: {
+        case 2: 
+        {
             addressAdmin adm = loginAdmin();
-            if (adm) homeAdmin(adm);
+            if (adm) {
+                homeAdmin(adm);
             }
+        }
             break;
         case 3:
             return;
@@ -160,7 +163,7 @@ void signUpAdmin(){
         cin >> username;
 
         if (searchAdmin(dataAdmin, username)) {
-            cout << "Username ada!\n";
+            cout << "Username telah dipakai!\n";
         }else{
             cout << "Password: "; 
             cin >> password;
@@ -238,7 +241,7 @@ void homeAdmin(addressAdmin adminLogin){
             cout << "Lagu berhasil ditambahkan!" << endl;
             break;
         }
-        case 2:
+        case 2:{
             cout << "Masukan judul lagu yang mau diedit: ";
             cin >> cariJudul;
             addressLagu P = searchLaguJudul(masterLagu, cariJudul);
@@ -260,6 +263,7 @@ void homeAdmin(addressAdmin adminLogin){
                 cout << "Lagu tidak ditemukan!" << endl;
             }
             break;
+        }
         case 3:
             cout << "Masukan judul lagu yang ingin dihapus: ";
             cin >> cariJudul;
@@ -344,7 +348,7 @@ void signUpUser(){
             newUser.password = password;
             
             insertLastUser(dataUser, createElmUser(newUser));
-            userCreatePlaylistSpotikuy(masterPlaylist, createElmUser(newUser), "Liked Songs", true);
+            userCreatePlaylist(masterPlaylist, createElmUser(newUser), "Liked Songs", true);
             cout << "Akun User berhasil dibuat!" << endl;
             break;
         }
@@ -392,14 +396,26 @@ void homeUser(addressUser userLogin){
             cout << "(Library Kosong)" << endl;
         } 
         int i = 1;
-        while (R != nullptr) {
+       while (R != nullptr) {
             cout << i++ << ". " << R->recPlaylist->info.namaPlaylist;
+            
             if (R->recPlaylist->info.isFavorite) {
                 cout << " [♥]";
             }
-            cout << " (" << (R->recPlaylist->info.pembuat == userLogin->info.username ? "Owner" : "Followed") << ")" << endl;
+
+            cout << " (";
+
+            if (R->recPlaylist->info.pembuat == userLogin->info.username) {
+                cout << "Owner";
+            } else {
+                cout << "Followed";
+            }
+
+            cout << ")" << endl;
+
             R = R->next;
         }
+
         cout << "--------------------------------\n";
         cout << "[1] Buka Playlist (Play/Edit)" << endl;
         cout << "[2] Buat Playlist Baru" << endl;
@@ -557,3 +573,36 @@ void musicPlayer(addressPlaylist P, int modeSort) {
         }
     }
 };
+
+void menuDetailPlaylist(addressUser U, addressPlaylist P) {
+    bool isOwner = (P->info.pembuat == U->info.username);
+    while (true) {
+        cout << "PLAYLIST: " << P->info.namaPlaylist << "\n";
+        showPlaylistContent(P);
+        cout << "\n[1] Play (Urutan Masuk: Terlama -> Terbaru)\n";
+        cout << "[2] Play (Urutan Masuk: Terbaru -> Terlama)\n";
+        if (isOwner) {
+            cout << "[3] Add Song\n[4] Remove Song\n";
+        }
+        cout << "[0] Back\n>> ";
+        int pil; 
+        cin >> pil;
+
+        if (pil == 0) return;
+        if (pil == 1) musicPlayer(P, 1);
+        else if (pil == 2) musicPlayer(P, 2);
+        else if (isOwner && pil == 3) {
+            string judul; 
+            cout << "Masukkan Judul Lagu (Cek Global dulu): "; cin.ignore(); getline(cin, judul);
+            addressLagu L = searchLaguJudul(masterLagu, judul);
+            if (L) addSongToPlaylist(U, P->info.namaPlaylist, L);
+            else cout << "Lagu tidak ditemukan.\n";
+            system("pause");
+        }
+        else if (isOwner && pil == 4) {
+            string judul; cout << "Hapus Judul: "; cin.ignore(); getline(cin, judul);
+            removeSongFromPlaylist(U, P->info.namaPlaylist, judul);
+            system("pause");
+        }
+    }
+}

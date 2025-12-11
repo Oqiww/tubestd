@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <iomanip>   
 using namespace std;
 
 struct Lagu {
@@ -137,11 +138,11 @@ void insertLastUser(ListUser &L, addressUser P);
 addressUser searchUser(ListUser L, string username);
 
 // RELASI & FITUR
-void userCreatePlaylistSpotikuy(ListPlaylist &LP, addressUser U, string namaPlaylist, bool isFav);
-void tambahLaguKePlaylistSpotikuy(addressUser U, string namaPlaylist, addressLagu P_Lagu);
-void hapusLaguDariPlaylistSpotikuy(addressUser U, string namaPlaylist, string judulLagu);
+void userCreatePlaylist(ListPlaylist &LP, addressUser U, string namaPlaylist, bool isFav);
+void addSongToPlaylist(addressUser U, string namaPlaylist, addressLagu P_Lagu);
+void removeSongFromPlaylist(addressUser U, string namaPlaylist, string judulLagu);
 // Fungsi tampil diperbarui untuk UI
-void tampilkanPlaylistSpotikuy(addressPlaylist P); 
-void pengikutPenggunaPlaylistSpotikuy(addressUser U, addressPlaylist P);
+void showPlaylistContent(addressPlaylist P); 
+void userFollowPlaylist(addressUser U, addressPlaylist P);
 
 #endif

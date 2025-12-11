@@ -6,51 +6,184 @@ using namespace std;
 // =======================
 // IMPLEMENTASI Playlist (MLL)
 // =======================
-addressPlaylist createElmPlaylist(addressLagu L){
+void createListPlaylist(ListPlaylist &L){
+    L.first = nullptr;
+    L.last = nullptr;
+}
+
+addressPlaylist createElmPlaylist(InfotypePlaylist data){
     addressPlaylist P = new elmPlaylist;
-    P->lagu = L;
+    P->info = data;
+    P->listLagu.first = nullptr;
+    P->listLagu.last = nullptr;
+    P->prev = nullptr;
     P->next = nullptr;
     return P;
 }
 
-void addToPlaylist(addressUser U, addressLagu L) {
-    if (!U || !L) return;
-
-    addressPlaylist P = createElmPlaylist(L);
-
-    if (U->info.firstPlaylist == nullptr) {
-        U->info.firstPlaylist = P;
+void insertLastPlaylist(ListPlaylist &L, addressPlaylist P){
+    if (L.first == nullptr){
+        L.first = P;
+        L.last = P;
     } else {
-        addressPlaylist Q = U->info.firstPlaylist;
-        while (Q->next != nullptr) {
-            Q = Q->next;
-        }
-        Q->next = P;
+        L.last->next = P;
+        P->prev = L.last;
+        L.last = P;
     }
-
-    cout << "Lagu berhasil ditambahkan ke playlist " << U->info.username << endl;
 }
 
-void showPlaylist(addressUser U) {
-    if (!U) {
-        cout << "User tidak valid\n";
-        return;
-    }
-
-    if (U->info.firstPlaylist == nullptr) {
-        cout << "Playlist kosong\n";
-        return;
-    }
-
-    addressPlaylist P = U->info.firstPlaylist;
-    cout << "\n=== PLAYLIST " << U->info.username << " ===\n";
-    while (P != nullptr) {
-        cout << "- " << P->lagu->info.judul
-             << " (" << P->lagu->info.penyanyi << ")\n";
+addressPlaylist searchPlaylist(ListPlaylist L, string namaPlaylist){
+    addressPlaylist P = L.first;
+    while(P != nullptr){
+        if (P->info.namaPlaylist == namaPlaylist){
+            return P;
+        }
         P = P->next;
     }
+    return nullptr;
 }
 
+void showAllPlaylist(ListPlaylist L) {
+    cout << "\n";
+    cout << "+----------------------------------------+\n";
+    cout << "|           PUBLIC PLAYLISTS             |\n";
+    cout << "+----------------------------------------+\n";
+    addressPlaylist P = L.first;
+    if (P == nullptr) { 
+        cout << "| (Kosong)                               |\n"; 
+    }
+    while (P != nullptr) {
+        if (!P->info.isFavorite) {
+            cout << "| " << left << setw(20) << P->info.namaPlaylist << " (" << setw(10) << P->info.pembuat << ") |\n";
+        }
+        P = P->next;
+    }
+    cout << "+----------------------------------------+\n";
+}
+
+//FITUR
+void userCreatePlaylist(ListPlaylist &LP, addressUser U, string namaPlaylist, bool isFav) {
+    InfotypePlaylist dataP; 
+    dataP.id = rand(); 
+    dataP.namaPlaylist = namaPlaylist; 
+    dataP.pembuat = U->info.username; 
+    dataP.isFavorite = isFav;
+    addressPlaylist newP = createElmPlaylist(dataP);
+    insertLastPlaylist(LP, newP);
+    userFollowPlaylist(U, newP);
+    if(!isFav) cout << ">> Playlist '" << namaPlaylist << "' berhasil dibuat.\n";
+}
+
+void userFollowPlaylist(addressUser U, addressPlaylist P) {
+    addressRelasiPlaylist R = new elmRelasiPlaylist; 
+    R->recPlaylist = P; 
+    R->next = nullptr; 
+    R->prev = nullptr;
+    if (U->listPlaylist.first == nullptr) { 
+        U->listPlaylist.first = R; 
+        U->listPlaylist.last = R;
+    }
+    else { 
+        U->listPlaylist.last->next = R; 
+        R->prev = U->listPlaylist.last; 
+        U->listPlaylist.last = R;
+    }
+}
+
+void addSongToPlaylist(addressUser U, string namaPlaylist, addressLagu P_Lagu) {
+    addressRelasiPlaylist R_Play = U->listPlaylist.first;
+    addressPlaylist targetP = nullptr;
+    while (R_Play != nullptr) {
+        if (R_Play->recPlaylist->info.namaPlaylist == namaPlaylist) { 
+            targetP = R_Play->recPlaylist; 
+            break; 
+        }
+        R_Play = R_Play->next;
+    }
+    if (targetP == nullptr) {
+        cout << "Playlist tidak ditemukan.\n"; 
+        return;
+    }
+    if (targetP->info.pembuat != U->info.username) {
+        cout << "Anda bukan pemilik playlist ini.\n"; 
+        return;
+    }
+
+    addressRelasiLagu newRL = new elmRelasiLagu; 
+    newRL->recLagu = P_Lagu; 
+    newRL->next = nullptr; 
+    newRL->prev = nullptr;
+    if (targetP->listLagu.first == nullptr) {
+        targetP->listLagu.first = newRL; 
+        targetP->listLagu.last = newRL;
+    }
+    else {
+        targetP->listLagu.last->next = newRL; 
+        newRL->prev = targetP->listLagu.last; 
+        targetP->listLagu.last = newRL;
+    }
+    cout << ">> Lagu berhasil ditambahkan.\n";
+}
+
+void removeSongFromPlaylist(addressUser U, string namaPlaylist, string judulLagu) {
+    addressRelasiPlaylist R_Play = U->listPlaylist.first;
+    addressPlaylist targetP = nullptr;
+    while (R_Play != nullptr) {
+        if (R_Play->recPlaylist->info.namaPlaylist == namaPlaylist) {
+            targetP = R_Play->recPlaylist; 
+            break;
+        }
+        R_Play = R_Play->next;
+    }
+    if (!targetP || targetP->info.pembuat != U->info.username) {
+        cout << "Akses ditolak.\n"; 
+        return;
+    }
+
+    addressRelasiLagu R_Song = targetP->listLagu.first;
+    while (R_Song != nullptr) {
+        if (R_Song->recLagu->info.judul == judulLagu) {
+            if (R_Song == targetP->listLagu.first && R_Song == targetP->listLagu.last) {
+                targetP->listLagu.first = nullptr; 
+                targetP->listLagu.last = nullptr;
+            } else if (R_Song == targetP->listLagu.first) {
+                targetP->listLagu.first = R_Song->next; 
+                targetP->listLagu.first->prev = nullptr;
+            } else if (R_Song == targetP->listLagu.last) {
+                targetP->listLagu.last = R_Song->prev; 
+                targetP->listLagu.last->next = nullptr;
+            } else {
+                R_Song->prev->next = R_Song->next; 
+                R_Song->next->prev = R_Song->prev;
+            }
+            delete R_Song;
+            cout << ">> Lagu dihapus dari playlist.\n"; return;
+        }
+        R_Song = R_Song->next;
+    }
+    cout << ">> Lagu tidak ada di playlist.\n";
+}
+
+void showPlaylistContent(addressPlaylist P) {
+    if (P == nullptr) {
+        return;
+    }
+    cout << "+----------------------------------------+\n";
+    cout << "| Playlist: " << left << setw(27) << P->info.namaPlaylist << "|\n";
+    cout << "+----------------------------------------+\n";
+    addressRelasiLagu R = P->listLagu.first;
+    if (R == nullptr) {
+        cout << "| (Kosong)                               |\n";
+    }
+    int i = 1;
+    while (R != nullptr) {
+        cout << "| " << i++ << ". " << left << setw(20) << R->recLagu->info.judul << " (" << R->recLagu->info.durasi << ")    |\n";
+        R = R->next;
+    }
+    cout << "+----------------------------------------+\n";
+}
+
+// Lagu
 void createListLagu(ListLagu &L){
     L.first = nullptr;
     L.last = nullptr;
@@ -103,48 +236,69 @@ addressLagu searchLaguJudul(ListLagu L, string x){
     }
     return nullptr;
 }
-addressLagu searchLaguID(ListLagu L, int x){
-    addressLagu P;
-    P = L.first;
-    while (P != nullptr){
-        if (P->info.id == x){
-            return P;
-        }
-        P = P->next;
-    }
-    return nullptr;
-}
 
 
-void deleteLagu(ListLagu &L, string x){
-    addressLagu Prec, q;
-    q = searchLaguJudul(L, x);
-    if (q){
-        if (q == L.first && q == L.last){
-            L.first = nullptr;
-            L.last = nullptr;
-        } else if (q == L.first){
-            L.first = q->next;
-            q->next = nullptr;
-            L.first->prev = nullptr;
-        }else if (q == L.last){
-            L.last = L.last->prev;
-            q->prev = nullptr;
-            L.last->next = nullptr;
-        }else{
-            Prec = q->prev;
-            Prec->next = q->next;
-            q->next->prev = Prec;
-            q->next = nullptr;
-            q->prev = nullptr;
-
-        }
-        cout << "Lagu berhasil dihapus." << endl;
-    }else{
-        cout << "Lagu yang ingin anda hapus tidak ada di Spitipi" << endl;
+void deleteLaguGlobal(ListLagu &L, ListPlaylist &LP, string judul){
+    addressLagu P = searchLaguJudul(L, judul);
+    if (P == nullptr) {
+        cout << "Lagu tidak ditemukan" << endl;
+        return;
     }
 
+    // Hapus referensi dari playlist
+    addressPlaylist P_Play = LP.first;
+    while (P_Play != nullptr) {
+        addressRelasiLagu R = P_Play->listLagu.first;
+        while (R != nullptr) {
+            addressRelasiLagu nextR = R->next;
+            if (R->recLagu == P) {
+                if (R == P_Play->listLagu.first && R == P_Play->listLagu.last) {
+                    P_Play->listLagu.first = nullptr; 
+                    P_Play->listLagu.last = nullptr;
+                } else if (R == P_Play->listLagu.first) {
+                    P_Play->listLagu.first = R->next; 
+                    P_Play->listLagu.first->prev = nullptr;
+                } else if (R == P_Play->listLagu.last) {
+                    P_Play->listLagu.last = R->prev; 
+                    P_Play->listLagu.last->next = nullptr;
+                } else {
+                    R->prev->next = R->next; 
+                    R->next->prev = R->prev;
+                }
+                delete R;
+            }
+            R = nextR;
+        }
+        P_Play = P_Play->next;
+    }
+    // Hapus Lagu Global
+    if (P == L.first && P == L.last) {
+        L.first = nullptr; 
+        L.last = nullptr;
+    } else if (P == L.first) {
+        L.first = P->next; 
+        L.first->prev = nullptr;
+    } else if (P == L.last) {
+        L.last = P->prev; 
+        L.last->next = nullptr;
+    } else {
+        P->prev->next = P->next; 
+        P->next->prev = P->prev;
+    }
+    delete P;
+    cout << "Lagu berhasil dihapus total.\n";
 }
+
+void editLaguGlobal(string judulBaru, string penyanyiBaru, string durasiBaru, string genreBaru, addressLagu P) {
+    if (P != nullptr) {
+        P->info.judul = judulBaru; 
+        P->info.penyanyi = penyanyiBaru;
+        P->info.durasi = durasiBaru; 
+        P->info.genre = genreBaru;
+        cout << "Lagu berhasil diupdate!\n";
+    }
+}
+
 
 // =======================
 // IMPLEMENTASI ADMIN (SLL)
@@ -193,7 +347,8 @@ void createListUser(ListUser &L) {
 addressUser createElmUser(User data) {
     addressUser P = new elmUser;
     P->info = data;
-    P->info.firstPlaylist = nullptr;
+    P->listPlaylist.first = nullptr;
+    P->listPlaylist.last = nullptr;
     P->next = nullptr;
     return P;
 }
