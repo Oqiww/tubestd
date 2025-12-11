@@ -3,14 +3,13 @@
 
 #include <iostream>
 #include <string>
-#include <iomanip> // Untuk merapikan tabel UI
 using namespace std;
 
 struct Lagu {
     int id;
     string judul, penyanyi;
-    string durasi; // String durasi display (ex: "03:40")
-    int durasiDetik; // Integer untuk simulasi play (ex: 220)
+    string durasi; 
+    int durasiDetik; 
     string genre;
 };
 

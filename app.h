@@ -5,7 +5,6 @@
 using namespace std;
 
 void menu();
-void clearScreen(); // Helper membersihkan layar
 
 void menuAdmin(); 
 void signUpAdmin();
@@ -16,7 +15,6 @@ void menuUser();
 void signUpUser();
 addressUser loginUser();
 void homeUser(addressUser userLogin);
-void menuDetailPlaylist(addressUser U, addressPlaylist P);
 
 void musicPlayer(addressPlaylist P, int modeSort);
 
