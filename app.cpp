@@ -129,10 +129,13 @@ void menuAdmin(){
         case 1:
             signUpAdmin();
             break;
-        case 2: {
+        case 2: 
+        {
             addressAdmin adm = loginAdmin();
-            if (adm) homeAdmin(adm);
+            if (adm) {
+                homeAdmin(adm);
             }
+        }
             break;
         case 3:
             return;
@@ -160,7 +163,7 @@ void signUpAdmin(){
         cin >> username;
 
         if (searchAdmin(dataAdmin, username)) {
-            cout << "Username ada!\n";
+            cout << "Username telah dipakai!\n";
         }else{
             cout << "Password: "; 
             cin >> password;
@@ -238,7 +241,7 @@ void homeAdmin(addressAdmin adminLogin){
             cout << "Lagu berhasil ditambahkan!" << endl;
             break;
         }
-        case 2:
+        case 2:{
             cout << "Masukan judul lagu yang mau diedit: ";
             cin >> cariJudul;
             addressLagu P = searchLaguJudul(masterLagu, cariJudul);
@@ -254,12 +257,13 @@ void homeAdmin(addressAdmin adminLogin){
                 cin >> durasaiBaru;
                 cout << "Genre Baru: "; 
                 cin >> genreBaru;
-                editLaguGlobal(masterLagu, judulBaru, penyanyiBaru, durasaiBaru, genreBaru, P);
+                editLaguGlobal(judulBaru, penyanyiBaru, durasaiBaru, genreBaru, P);
                 break;
             } else {
                 cout << "Lagu tidak ditemukan!" << endl;
             }
             break;
+        }
         case 3:
             cout << "Masukan judul lagu yang ingin dihapus: ";
             cin >> cariJudul;
@@ -342,9 +346,10 @@ void signUpUser(){
 
             newUser.username = username;
             newUser.password = password;
+            addressUser baru = createElmUser(newUser);
             
-            insertLastUser(dataUser, createElmUser(newUser));
-            userCreatePlaylistSpotikuy(masterPlaylist, createElmUser(newUser), "Liked Songs", true);
+            insertLastUser(dataUser, baru);
+            userCreatePlaylist(masterPlaylist, baru, "Liked Songs", true);
             cout << "Akun User berhasil dibuat!" << endl;
             break;
         }
@@ -392,14 +397,26 @@ void homeUser(addressUser userLogin){
             cout << "(Library Kosong)" << endl;
         } 
         int i = 1;
-        while (R != nullptr) {
+       while (R != nullptr) {
             cout << i++ << ". " << R->recPlaylist->info.namaPlaylist;
+            
             if (R->recPlaylist->info.isFavorite) {
                 cout << " [♥]";
             }
-            cout << " (" << (R->recPlaylist->info.pembuat == userLogin->info.username ? "Owner" : "Followed") << ")" << endl;
+
+            cout << " (";
+
+            if (R->recPlaylist->info.pembuat == userLogin->info.username) {
+                cout << "Owner";
+            } else {
+                cout << "Followed";
+            }
+
+            cout << ")" << endl;
+
             R = R->next;
         }
+
         cout << "--------------------------------\n";
         cout << "[1] Buka Playlist (Play/Edit)" << endl;
         cout << "[2] Buat Playlist Baru" << endl;
