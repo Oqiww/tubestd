@@ -257,7 +257,7 @@ void homeAdmin(addressAdmin adminLogin){
                 cin >> durasaiBaru;
                 cout << "Genre Baru: "; 
                 cin >> genreBaru;
-                editLaguGlobal(masterLagu, judulBaru, penyanyiBaru, durasaiBaru, genreBaru, P);
+                editLaguGlobal(judulBaru, penyanyiBaru, durasaiBaru, genreBaru, P);
                 break;
             } else {
                 cout << "Lagu tidak ditemukan!" << endl;
@@ -346,9 +346,10 @@ void signUpUser(){
 
             newUser.username = username;
             newUser.password = password;
+            addressUser baru = createElmUser(newUser);
             
-            insertLastUser(dataUser, createElmUser(newUser));
-            userCreatePlaylist(masterPlaylist, createElmUser(newUser), "Liked Songs", true);
+            insertLastUser(dataUser, baru);
+            userCreatePlaylist(masterPlaylist, baru, "Liked Songs", true);
             cout << "Akun User berhasil dibuat!" << endl;
             break;
         }
