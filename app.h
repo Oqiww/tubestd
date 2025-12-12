@@ -17,6 +17,8 @@ addressUser loginUser();
 void homeUser(addressUser userLogin);
 
 void musicPlayer(addressPlaylist P, int modeSort);
+void menuDetailPlaylist(addressUser U, addressPlaylist P);
+
 
 
 

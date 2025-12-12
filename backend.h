@@ -3,14 +3,14 @@
 
 #include <iostream>
 #include <string>
-#include <iomanip> // Untuk merapikan tabel UI
+#include <iomanip>   
 using namespace std;
 
 struct Lagu {
     int id;
     string judul, penyanyi;
-    string durasi; // String durasi display (ex: "03:40")
-    int durasiDetik; // Integer untuk simulasi play (ex: 220)
+    string durasi; 
+    int durasiDetik; 
     string genre;
 };
 
@@ -116,7 +116,7 @@ void insertLastLagu(ListLagu &L, addressLagu P);
 void showAllLagu(ListLagu L);
 addressLagu searchLaguJudul(ListLagu L, string x);
 void deleteLaguGlobal(ListLagu &L, ListPlaylist &LP, string judul); 
-void editLaguGlobal(ListLagu &L, string judulBaru, string penyanyiBaru, string durasiBaru, string genreBaru, addressLagu P);
+void editLaguGlobal(string judulBaru, string penyanyiBaru, string durasiBaru, string genreBaru, addressLagu P);
 
 // PLAYLIST
 void createListPlaylist(ListPlaylist &L);
@@ -138,11 +138,11 @@ void insertLastUser(ListUser &L, addressUser P);
 addressUser searchUser(ListUser L, string username);
 
 // RELASI & FITUR
-void userCreatePlaylistSpotikuy(ListPlaylist &LP, addressUser U, string namaPlaylist, bool isFav);
-void tambahLaguKePlaylistSpotikuy(addressUser U, string namaPlaylist, addressLagu P_Lagu);
-void hapusLaguDariPlaylistSpotikuy(addressUser U, string namaPlaylist, string judulLagu);
+void userCreatePlaylist(ListPlaylist &LP, addressUser U, string namaPlaylist, bool isFav);
+void addSongToPlaylist(addressUser U, string namaPlaylist, addressLagu P_Lagu);
+void removeSongFromPlaylist(addressUser U, string namaPlaylist, string judulLagu);
 // Fungsi tampil diperbarui untuk UI
-void tampilkanPlaylistSpotikuy(addressPlaylist P); 
-void pengikutPenggunaPlaylistSpotikuy(addressUser U, addressPlaylist P);
+void showPlaylistContent(addressPlaylist P); 
+void userFollowPlaylist(addressUser U, addressPlaylist P);
 
 #endif
