@@ -69,14 +69,14 @@ void menu(){
     while (ulang){
         cout <<  "+====================+" << endl;
         cout <<  "|                     |" << endl;
-        cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
+        cout <<  "|       SPOTIKUY      |" << endl;
         cout <<  "|                     |" << endl;
         cout <<  "+====================+" << endl;
         cout << endl;
 
-        cout << "[1.] Admin" << endl;
-        cout << "[2.] User" << endl;
-        cout << "[3.] Exit" << endl;
+        cout << "[1] Admin" << endl;
+        cout << "[2] User" << endl;
+        cout << "[3] Keluar" << endl;
         cout << endl;
 
         int pilihan;
@@ -104,17 +104,17 @@ void menu(){
 void menuAdmin(){
     while (true){
  
-        cout <<  "+====================+" << endl;
+        cout <<  "+=====================+" << endl;
         cout <<  "|                     |" << endl;
-        cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
+        cout <<  "|       SPOTIKUY      |" << endl;
         cout <<  "|                     |" << endl;
-        cout <<  "+====================+" << endl;
+        cout <<  "+=====================+" << endl;
         cout << endl;
 
 
-        cout << "1. Sign up" << endl;
-        cout << "2. Login" << endl;
-        cout << "3. Back to menu" << endl;
+        cout << "[1] Sign up" << endl;
+        cout << "[2] Login" << endl;
+        cout << "[3] Kembali ke menu" << endl;
         cout << endl;
 
         int pilihan;
@@ -147,11 +147,11 @@ void signUpAdmin(){
     string username, password;
     Admin data;
     while (true){
-        cout <<  "+====================+" << endl;
+        cout <<  "+=====================+" << endl;
         cout <<  "|                     |" << endl;
-        cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
+        cout <<  "|       SPOTIKUY      |" << endl;
         cout <<  "|                     |" << endl;
-        cout <<  "+====================+" << endl;
+        cout <<  "+=====================+" << endl;
         cout << endl;
 
 
@@ -201,19 +201,19 @@ addressAdmin loginAdmin(){
 void homeAdmin(addressAdmin adminLogin){
     string cariJudul;
     while(true){
-        cout <<  "+====================+" << endl;
+        cout <<  "+=====================+" << endl;
         cout <<  "|                     |" << endl;
-        cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
+        cout <<  "|       SPOTIKUY      |" << endl;
         cout <<  "|                     |" << endl;
-        cout <<  "+====================+" << endl;
+        cout <<  "+=====================+" << endl;
         cout << "\n--- Dashboard Admin (" << adminLogin->info.username << ") ---" << endl;
         cout << endl;
 
-        cout << "1. Tambah lagu" << endl;
-        cout << "2. Edit lagu" << endl;
-        cout << "3. Hapus Lagu" << endl;
-        cout << "4. Lihat semua lagu" << endl;
-        cout << "5. Kembali" << endl;
+        cout << "[1] Tambah lagu" << endl;
+        cout << "[2] Edit lagu" << endl;
+        cout << "[3] Hapus Lagu" << endl;
+        cout << "[4] Lihat semua lagu" << endl;
+        cout << "[5] Kembali" << endl;
 
         int pilihan;
         cout << "Masukkan pilihan anda (1/2/3/4/5): ";
@@ -282,17 +282,17 @@ void homeAdmin(addressAdmin adminLogin){
 
 void menuUser(){
     while (true){
-        cout <<  "+====================+" << endl;
+        cout <<  "+=====================+" << endl;
         cout <<  "|                     |" << endl;
-        cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
+        cout <<  "|       SPOTIKUY      |" << endl;
         cout <<  "|                     |" << endl;
-        cout <<  "+====================+" << endl;
+        cout <<  "+=====================+" << endl;
         cout << endl;
 
         
-        cout << "1. Sign up" << endl;
-        cout << "2. Login" << endl;
-        cout << "3. Back to menu" << endl;
+        cout << "[1] Sign up" << endl;
+        cout << "[2] Login" << endl;
+        cout << "[3] Kembali ke menu" << endl;
         cout << endl;
 
         int pilihan;
@@ -324,11 +324,11 @@ void signUpUser(){
     User newUser;
 
     while (true){
-        cout <<  "+====================+" << endl;
+        cout <<  "+=====================+" << endl;
         cout <<  "|                     |" << endl;
-        cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
+        cout <<  "|       SPOTIKUY      |" << endl;
         cout <<  "|                     |" << endl;
-        cout <<  "+====================+" << endl;
+        cout <<  "+=====================+" << endl;
         cout << endl;
 
 
@@ -383,11 +383,11 @@ addressUser loginUser(){
 void homeUser(addressUser userLogin){
     string namaP; 
     while(true){
-        cout <<  "+====================+" << endl;
+        cout <<  "+=====================+" << endl;
         cout <<  "|                     |" << endl;
-        cout << "|       𝕤𝕡𝕠𝕥𝕚𝕜𝕦𝕪♬      |" << endl;
+        cout <<  "|       SPOTIKUY      |" << endl;
         cout <<  "|                     |" << endl;
-        cout <<  "+====================+" << endl;
+        cout <<  "+=====================+" << endl;
         cout << endl;
 
         cout << "\n[ YOUR LIBRARY ]\n";
@@ -421,7 +421,7 @@ void homeUser(addressUser userLogin){
         cout << "[2] Buat Playlist Baru" << endl;
         cout << "[3] Cari & Follow Playlist" << endl;
         cout << "[4] Lihat Semua Lagu Global" << endl;
-        cout << "[0] Exit" << endl;
+        cout << "[0] Keluar" << endl;
 
         int pilihan;
         cout << "Masukkan pilihan anda (1/2/3/4/0): ";
@@ -581,9 +581,9 @@ void menuDetailPlaylist(addressUser U, addressPlaylist P) {
 
         cout << "[1] Play (Urutan Masuk: Terlama -> Terbaru)" << endl;
         cout << "[2] Play (Urutan Masuk: Terbaru -> Terlama)" << endl;
-        cout << "[3] Add Song" << endl;
-        cout << "[4] Remove Song" << endl;
-        cout << "[5] Exit" << endl;
+        cout << "[3] Tambah Lagu" << endl;
+        cout << "[4] Hapus Lagu" << endl;
+        cout << "[5] Keluar" << endl;
         cout << endl;
 
         int pilihan;
