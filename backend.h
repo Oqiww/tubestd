@@ -117,6 +117,8 @@ void showAllLagu(ListLagu L);
 addressLagu searchLaguJudul(ListLagu L, string x);
 void deleteLaguGlobal(ListLagu &L, ListPlaylist &LP, string judul); 
 void editLaguGlobal(string judulBaru, string penyanyiBaru, string durasiBaru, string genreBaru, addressLagu P);
+addressLagu getNextLaguByGenre(addressLagu current, string genre);
+addressLagu getPrevLaguByGenre(addressLagu current, string genre);
 
 // PLAYLIST
 void createListPlaylist(ListPlaylist &L);
