@@ -202,9 +202,13 @@ void insertLastLagu(ListLagu &L, addressLagu P){
     if (L.first == nullptr){
         L.first = P;
         L.last = P;
+        P->next = P;
+        P->prev = P;
     } else {
-        L.last->next = P;
         P->prev = L.last;
+        P->next = L.first;
+        L.last->next = P;
+        L.first->prev = P;
         L.last = P;
     }
 };
@@ -218,7 +222,7 @@ void showAllLagu(ListLagu L){
         return;
     }
 
-    while (P != nullptr) {
+    do {
         cout << "ID      : " << P->info.id << endl;
         cout << "Judul   : " << P->info.judul << endl;
         cout << "Penyanyi: " << P->info.penyanyi << endl;
@@ -226,17 +230,22 @@ void showAllLagu(ListLagu L){
         cout << "Genre   : " << P->info.genre << endl;
         cout << "------------------------\n";
         P = P->next;
-    }
+    } while (P != L.first);
 };
+
 addressLagu searchLaguJudul(ListLagu L, string x){
-    addressLagu P;
-    P = L.first;
-    while (P != nullptr){
+    if (L.first == nullptr) {
+        return nullptr;
+    }
+    
+    addressLagu P = L.first;
+    do {
         if (P->info.judul == x){
             return P;
         }
         P = P->next;
-    }
+    } while (P != L.first);
+    
     return nullptr;
 }
 
@@ -276,17 +285,21 @@ void deleteLaguGlobal(ListLagu &L, ListPlaylist &LP, string judul){
     }
     // Hapus Lagu Global
     if (P == L.first && P == L.last) {
-        L.first = nullptr; 
+        L.first = nullptr;
         L.last = nullptr;
-    } else if (P == L.first) {
-        L.first = P->next; 
-        L.first->prev = nullptr;
-    } else if (P == L.last) {
-        L.last = P->prev; 
-        L.last->next = nullptr;
     } else {
-        P->prev->next = P->next; 
-        P->next->prev = P->prev;
+        addressLagu Prec = P->prev;
+        addressLagu NextNode = P->next;
+        
+        Prec->next = NextNode;
+        NextNode->prev = Prec;
+
+        if (P == L.first) {
+            L.first = NextNode;
+        }
+        if (P == L.last) {
+            L.last = Prec;
+        }
     }
     delete P;
     cout << "Lagu berhasil dihapus total.\n";
@@ -302,6 +315,32 @@ void editLaguGlobal(string judulBaru, string penyanyiBaru, string durasiBaru, st
     }
 }
 
+addressLagu getNextLaguByGenre(addressLagu current, string genre) {
+    if (current == nullptr) {
+        return nullptr;
+    }
+    addressLagu P = current->next;
+    // Cari ke depan sampai ketemu genre sama atau kembali ke diri sendiri
+    while (P != current) {
+        if (P->info.genre == genre) {
+            return P;
+        }
+        P = P->next;
+    }
+    return nullptr; // Tidak ada lagu lain dengan genre sama
+}
+
+addressLagu getPrevLaguByGenre(addressLagu current, string genre) {
+    if (current == nullptr) return nullptr;
+    addressLagu P = current->prev;
+    while (P != current) {
+        if (P->info.genre == genre) {
+            return P;
+        }
+        P = P->prev;
+    }
+    return nullptr;
+}
 
 // =======================
 // IMPLEMENTASI ADMIN (SLL)

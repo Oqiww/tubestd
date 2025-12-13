@@ -54,11 +54,13 @@ void menu(){
     User u1_data = {"rosandi", "1234"}; 
     addressUser u1 = createElmUser(u1_data);
     insertLastUser(dataUser, u1);
+    userCreatePlaylist(masterPlaylist, u1, "Liked Songs", true);
 
     // User 2
     User u2_data = {"nada", "1234"};
     addressUser u2 = createElmUser(u2_data);
     insertLastUser(dataUser, u2);
+    userCreatePlaylist(masterPlaylist, u2, "Liked Songs", true);
 
     // User 3
     User u3_data = {"syauqi", "1234"};
@@ -241,7 +243,7 @@ void homeAdmin(addressAdmin adminLogin){
         }
         case 2:{
             cout << "Masukan judul lagu yang mau diedit: ";
-            cin >> cariJudul;
+            cin.ignore(); getline(cin, cariJudul);
             addressLagu P = searchLaguJudul(masterLagu, cariJudul);
             
             if (P){
@@ -380,6 +382,40 @@ addressUser loginUser(){
     }
 }
 
+void menuSearchResult(addressUser U, addressLagu L) {
+    while(true) {
+        cout << "\n[ Lagu Ditemukan: " << L->info.judul << " - " << L->info.penyanyi << " ]" << endl;
+        cout << "[1] Play Lagu (Auto-next Genre)" << endl;
+        cout << "[2] Tambahkan ke Liked Songs" << endl;
+        cout << "[3] Tambahkan ke Playlist Lain" << endl;
+        cout << "[0] Kembali" << endl;
+        cout << "Pilihan: ";
+        int pil; cin >> pil;
+
+        if (pil == 0) return;
+        
+        if (pil == 1) {
+            // PLAY GLOBAL GENRE MODE
+            musicPlayerGlobal(L);
+        } else if (pil == 2) {
+            // Add to Favorite (Liked Songs)
+            addSongToPlaylist(U, "Liked Songs", L);
+        } else if (pil == 3) {
+            // Add to Specific Playlist
+            cout << "\n[ Daftar Playlist Anda ]\n";
+            addressRelasiPlaylist R = U->listPlaylist.first;
+            while (R != nullptr) {
+                cout << "- " << R->recPlaylist->info.namaPlaylist << endl;
+                R = R->next;
+            }
+            string namaP;
+            cout << "Masukkan nama playlist tujuan: ";
+            cin.ignore(); getline(cin, namaP);
+            addSongToPlaylist(U, namaP, L);
+        }
+    }
+}
+
 void homeUser(addressUser userLogin){
     string namaP; 
     while(true){
@@ -421,6 +457,7 @@ void homeUser(addressUser userLogin){
         cout << "[2] Buat Playlist Baru" << endl;
         cout << "[3] Cari & Follow Playlist" << endl;
         cout << "[4] Lihat Semua Lagu Global" << endl;
+        cout << "[5] SEARCH LAGU (Play/Add)" << endl; // FITUR BARU
         cout << "[0] Keluar" << endl;
 
         int pilihan;
@@ -431,7 +468,7 @@ void homeUser(addressUser userLogin){
         case 1: {
          
             cout << "Nama Playlist: "; 
-            cin >> namaP;
+            cin.ignore(); getline(cin, namaP);           
             addressPlaylist target = nullptr;
             addressRelasiPlaylist RP = userLogin->listPlaylist.first;
             while (RP) {
@@ -451,14 +488,14 @@ void homeUser(addressUser userLogin){
         }
         case 2:{
             cout << "Nama Playlist Baru: " << endl; 
-            cin >> namaP;
+            cin.ignore(); getline(cin, namaP);
             userCreatePlaylist(masterPlaylist, userLogin, namaP, false);
             break;
         }
         case 3:{
             showAllPlaylist(masterPlaylist);
             cout << "Masukkan nama playlist yang ingin di follow: ";
-            cin >> namaP;
+            cin.ignore(); getline(cin, namaP);
             addressPlaylist P = searchPlaylist(masterPlaylist, namaP);
             if (P) {
                 if (P->info.pembuat == userLogin->info.username) {
@@ -488,14 +525,88 @@ void homeUser(addressUser userLogin){
         case 4:
             showAllLagu(masterLagu);
             cout << "\n(Tekan Enter untuk kembali)" << endl;
+            cin.ignore(); cin.get();
             break;
-        case 5:
+        case 5: {
+            // FITUR SEARCH & ACTION
+            string judulCari;
+            cout << "Masukkan Judul Lagu: ";
+            cin.ignore(); getline(cin, judulCari);
+            addressLagu hasil = searchLaguJudul(masterLagu, judulCari);
+            if (hasil) {
+                menuSearchResult(userLogin, hasil);
+            } else {
+                cout << "Lagu tidak ditemukan." << endl;
+            }
+            break;
+        }
+        case 0:
             return;
         default:
             cout << "Pilihan tidak valid!\n";
         }
     }
 };
+
+// PLAYER GENRE MODE (GLOBAL CDLL)
+void musicPlayerGlobal(addressLagu startSong) {
+    if (startSong == nullptr) return;
+
+    addressLagu currentSong = startSong;
+    string genreMode = startSong->info.genre;
+
+    cout << "\n[ SMART AUTOPLAY STARTED: GENRE " << genreMode << " ]\n";
+
+    while (currentSong != nullptr) {
+        // Play
+        for (int i = 1; i <= currentSong->info.durasiDetik; i++) {
+            #ifdef _WIN32
+                system("cls");
+            #else
+                system("clear");
+            #endif
+            cout << "========================================" << endl;
+            cout << "      GLOBAL PLAY (Genre: " << genreMode << ")      " << endl;
+            cout << "========================================" << endl;
+            cout << "Title  : " << currentSong->info.judul << endl;
+            cout << "Artist : " << currentSong->info.penyanyi << endl;
+            cout << "Time   : " << i << "s / " << currentSong->info.durasiDetik << "s " << endl;
+            cout << "========================================\n";
+            cout << "[Playing...] " << endl;
+            this_thread::sleep_for(chrono::seconds(1));
+        }
+
+        bool controlLoop = true;
+        while(controlLoop) {
+            cout << "========================================" << endl;
+            cout << "      SONG FINISHED: " << currentSong->info.judul << endl;
+            cout << "========================================" << endl;
+            cout << "[n] Next Song (Same Genre)" << endl;
+            cout << "[p] Previous Song (Same Genre)" << endl;
+            cout << "[s] Stop / Exit Player" << endl;
+            cout << "Pilihan: ";
+
+            char pilih;
+            cin >> pilih;
+
+            if (pilih == 's') return;
+            else if (pilih == 'n') {
+                // Cari next song dengan genre sama
+                addressLagu nextSong = getNextLaguByGenre(currentSong, genreMode);
+                if (nextSong) currentSong = nextSong;
+                else cout << "Tidak ada lagu lain dengan genre ini." << endl;
+                controlLoop = false;
+            }
+            else if (pilih == 'p') {
+                // Cari prev song dengan genre sama
+                 addressLagu prevSong = getPrevLaguByGenre(currentSong, genreMode);
+                if (prevSong) currentSong = prevSong;
+                else cout << "Tidak ada lagu lain dengan genre ini." << endl;
+                controlLoop = false;
+            }
+        }
+    }
+}
 
 void musicPlayer(addressPlaylist P, int modeSort) {
     if (P->listLagu.first == nullptr) {
@@ -540,27 +651,40 @@ void musicPlayer(addressPlaylist P, int modeSort) {
             case 's':
                 return;
             case 'n': {
-                if (modeSort == 1) {
-                    currentSong = currentSong->next;
-                } else {
-                    currentSong = currentSong->prev;
-                }
+                if (modeSort == 1) currentSong = currentSong->next;
+                else currentSong = currentSong->prev;
+                
+                // JIKA PLAYLIST HABIS -> SMART AUTOPLAY GLOBAL
                 if (currentSong == nullptr) {
-                    cout << "Akhir Playlist." << endl;
-                    return;
+                    cout << "\n[INFO] Playlist Selesai. Melanjutkan Smart Autoplay berdasarkan Genre..." << endl;
+                    this_thread::sleep_for(chrono::seconds(2));
+                    
+                    // Panggil Global Player mulai dari lagu terakhir (cari genre sama)
+                    // Kita cari nextnya dari lagu terakhir yang diputar
+                    // Karena currentRelasi sudah null, kita butuh pointer ke lagu terakhir
+                    addressLagu lastSongPlayed;
+                    if(modeSort == 1) lastSongPlayed = P->listLagu.last->recLagu;
+                    else lastSongPlayed = P->listLagu.first->recLagu;
+
+                    // Cari lagu selanjutnya di global dengan genre sama
+                    addressLagu nextGlobal = getNextLaguByGenre(lastSongPlayed, lastSongPlayed->info.genre);
+                    if(nextGlobal) musicPlayerGlobal(nextGlobal);
+                    else cout << "Tidak ada lagu sejenis di database global." << endl;
+                    
+                    return; 
                 }
                 controlLoop = false;
                 break;
             }
             case 'p': {
-                if (modeSort == 1) {
-                    currentSong = currentSong->prev;
-                } else {
-                    currentSong = currentSong->next;
-                }
+                if (modeSort == 1) currentSong = currentSong->prev;
+                else currentSong = currentSong->next;
+                
                 if (currentSong == nullptr) {
-                    cout << "Aawal Playlist." << endl;
-                    return;
+                    cout << "Awal Playlist." << endl;
+                    // Kalau prev di awal, biasanya stop atau stay
+                    if (modeSort == 1) currentSong = P->listLagu.first;
+                    else currentSong = P->listLagu.last;
                 }
                 controlLoop = false;
                 break;
