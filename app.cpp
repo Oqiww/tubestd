@@ -76,6 +76,16 @@ void menu(){
     userCreatePlaylist(masterPlaylist, u3, "Liked Songs", true);
     userCreatePlaylist(masterPlaylist, u3, "Chill Vibes", false);
 
+    addLaguToPlaylist(masterPlaylist, u1, "Liked Songs", "Hati-hati di Jalan");
+    addLaguToPlaylist(masterPlaylist, u1, "Liked Songs", "Tujuh Belas");
+    addLaguToPlaylist(masterPlaylist, u2, "Liked Songs", "ILYSB");
+    addLaguToPlaylist(masterPlaylist, u2, "Liked Songs", "Dehidrasi");
+    addLaguToPlaylist(masterPlaylist, u3, "Chill Vibes", "Secukupnya");
+    addLaguToPlaylist(masterPlaylist, u3, "Chill Vibes", "Evaluasi");
+
+
+
+
     bool ulang = true;
     while (ulang){
 
