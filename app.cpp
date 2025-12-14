@@ -240,19 +240,14 @@ void homeAdmin(addressAdmin adminLogin){
         cout << "Masukkan pilihan anda (1/2/3/4/5): ";
         cin >> pilihan;
 
-         if (cin.fail()) {
-            cin.clear();              // reset error state
-            cin.ignore(1000, '\n');   // buang input salah
-        }
-
         switch (pilihan){
         case 1: {
             clearScreen();
             Lagu L;
             cout << "ID Lagu: ";
             cin >> L.id;
+            cin.ignore(); 
             cout << "Judul: ";
-            cin.ignore();
             getline(cin, L.judul);
             cout << "Penyanyi: ";
             getline(cin, L.penyanyi);
@@ -281,7 +276,6 @@ void homeAdmin(addressAdmin adminLogin){
                 getline(cin, judulBaru);
                 cout << "Penyanyi Baru: ";
                 getline(cin, penyanyiBaru);
-                cin >> penyanyiBaru;
                 cout << "Durasi Baru: ";
                 cin >> durasaiBaru;
                 cout << "Genre Baru: ";
