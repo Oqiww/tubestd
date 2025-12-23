@@ -3,9 +3,7 @@
 #include <iostream>
 using namespace std;
 
-// =======================
-// IMPLEMENTASI Playlist (MLL)
-// =======================
+// Playlist (MLL)
 void createListPlaylist(ListPlaylist &L){
     L.first = nullptr;
     L.last = nullptr;
@@ -186,7 +184,7 @@ void showPlaylistContent(addressPlaylist P) {
     cout << "+----------------------------------------+" << endl;
 }
 
-// Lagu
+// Lagu (DLL)
 void createListLagu(ListLagu &L){
     L.first = nullptr;
     L.last = nullptr;
@@ -342,9 +340,7 @@ addressLagu getPrevLaguByGenre(addressLagu current, string genre) {
     return nullptr;
 }
 
-// =======================
-// IMPLEMENTASI ADMIN (SLL)
-// =======================
+//  Admin (SLL)
 void createListAdmin(ListAdmin &L) {
     L.first = nullptr;
 }
@@ -379,9 +375,7 @@ addressAdmin searchAdmin(ListAdmin L, string username) {
     return nullptr;
 }
 
-// =======================
 // IMPLEMENTASI USER (SLL)
-// =======================
 void createListUser(ListUser &L) {
     L.first = nullptr;
 }
