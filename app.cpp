@@ -121,6 +121,7 @@ void menu(){
     clearScreen();
 };
 
+// Menu admin
 void menuAdmin(){
     while (true){
 
@@ -167,6 +168,7 @@ void menuAdmin(){
     }
 };
 
+// Prosedur untuk sign up admin
 void signUpAdmin(){
     string username, password;
     Admin data;
@@ -191,6 +193,7 @@ void signUpAdmin(){
     }
 };
 
+// fungsi untuk login admin
 addressAdmin loginAdmin(){
     string username, password;
 
@@ -217,6 +220,7 @@ addressAdmin loginAdmin(){
     }
 };
 
+// menu admin
 void homeAdmin(addressAdmin adminLogin){
     string cariJudul;
     while(true){
@@ -309,7 +313,7 @@ void homeAdmin(addressAdmin adminLogin){
 
 };
 
-
+// menu user
 void menuUser(){
     while (true){
         cout <<  "+=====================+" << endl;
@@ -355,6 +359,8 @@ void menuUser(){
     clearScreen();
 }
 
+
+// prosedur untuk sign up user
 void signUpUser(){
     string username, password;
     User newUser;
@@ -391,6 +397,7 @@ void signUpUser(){
     }
 }
 
+// fungsi untuk login user
 addressUser loginUser(){
     string username, password;
 
@@ -418,6 +425,7 @@ addressUser loginUser(){
     }
 }
 
+// prosedur untuk mencari lagu yang diinginkan user
 void menuSearchResult(addressUser U, addressLagu L) {
     string namaP;
     while(true) {
@@ -440,15 +448,15 @@ void menuSearchResult(addressUser U, addressLagu L) {
         switch (pilih)
         {
         case 1:
-            // PLAY GLOBAL GENRE MODE
+            // Memainkan lagu yang genrenya mirip
             musicPlayerGlobal(L);
             break;
         case 2:
-            // Add to Favorite (Liked Songs)
+            // Menambahkan lagu ke favorite
             addSongToPlaylist(U, "Liked Songs", L);
             break;
         case 3:{
-            // Add to Specific Playlist
+            // Menambahkan lagu ke playlist
             cout << "\n[ Daftar Playlist Anda ]\n";
             addressRelasiPlaylist R = U->listPlaylist.first;
             while (R != nullptr) {
@@ -471,6 +479,7 @@ void menuSearchResult(addressUser U, addressLagu L) {
     }
 }
 
+// Menu home user
 void homeUser(addressUser userLogin){
     string namaP;
     while(true){
@@ -504,7 +513,7 @@ void homeUser(addressUser userLogin){
         cout << "[2] Lihat Semua Lagu Global" << endl;
         cout << "[3] Buat Playlist Baru" << endl;
         cout << "[4] Cari & Ikuti Playlist" << endl;
-        cout << "[5] Cari Lagu (Play/Add)" << endl; // FITUR BARU
+        cout << "[5] Cari Lagu (Play/Add)" << endl; 
         cout << "[6] Keluar" << endl;
         cout << "-------------------------------" << endl;
 
@@ -613,7 +622,7 @@ void homeUser(addressUser userLogin){
     clearScreen();
 };
 
-// PLAYER GENRE MODE (GLOBAL CDLL)
+// Memutar lagu global dengan genre yang mirip
 void musicPlayerGlobal(addressLagu startSong) {
     if (startSong == nullptr) {
         return;
@@ -750,7 +759,7 @@ void musicPlayer(addressPlaylist P, int modeSort) {
                      currentSong = currentSong->prev;
                 }
 
-                // JIKA PLAYLIST HABIS -> SMART AUTOPLAY GLOBAL
+                // Jika lagu habis akan memutar otomatis dari genre yang sama
                 if (currentSong == nullptr) {
                     cout << "\n[INFO] Playlist Selesai. Melanjutkan Smart Autoplay berdasarkan Genre..." << endl;
                     this_thread::sleep_for(chrono::seconds(2));
@@ -804,6 +813,7 @@ void musicPlayer(addressPlaylist P, int modeSort) {
     }
 };
 
+// Prosedur detail playlist
 void menuDetailPlaylist(addressUser U, addressPlaylist P) {
     bool isOwner = (P->info.pembuat == U->info.username);
     while (true){
